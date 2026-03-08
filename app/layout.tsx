@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -13,15 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "ryoukou | Fullstack Developer",
-    template: "%s | ryoukou Portfolio",
-  },
-  description:
-    "Portfolio ryoukou — Fullstack Developer building modern web applications using Laravel, React, and modern web technologies.",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  title: "ryoukou | Fullstack Developer",
+  description: "Portfolio ryoukou",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -31,9 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
