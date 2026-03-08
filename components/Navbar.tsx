@@ -6,125 +6,126 @@ import { Menu, X } from "lucide-react"
 
 export default function Navbar() {
 
-const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
-return (
+  return (
 
-<motion.nav
-initial={{ y: -80, opacity: 0 }}
-animate={{ y: 0, opacity: 1 }}
-transition={{ duration: 0.7, ease: "easeOut" }}
-className="fixed top-0 left-0 w-full backdrop-blur-xl bg-black/50 border-b border-gray-800 z-50"
->
+    <motion.nav
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="fixed top-0 left-0 w-full backdrop-blur-xl bg-black/50 border-b border-gray-800 z-50 shadow-lg"
+    >
 
-<div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+      <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
 
-{/* LOGO */}
-<motion.h1
-whileHover={{ scale: 1.08 }}
-className="font-bold text-xl tracking-wide bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent cursor-pointer"
->
-rryoukou
-</motion.h1>
+        {/* LOGO */}
+        <motion.h1
+          whileHover={{ scale: 1.08 }}
+          className="font-bold text-xl tracking-wide bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent cursor-pointer"
+        >
+          rryoukou
+        </motion.h1>
 
-{/* DESKTOP MENU */}
-<motion.div
-initial="hidden"
-animate="show"
-variants={{
-hidden: {},
-show: {
-transition: { staggerChildren: 0.1 }
-}
-}}
-className="hidden md:flex items-center gap-8 text-gray-300 text-sm"
->
+        {/* DESKTOP MENU */}
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: {
+              transition: { staggerChildren: 0.1 }
+            }
+          }}
+          className="hidden md:flex items-center gap-8 text-gray-300 text-sm"
+        >
 
-<motion.a
-variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
-whileHover={{ y:-2, scale:1.08 }}
-href="#about"
-className="hover:text-white transition"
->
-About
-</motion.a>
+          <motion.a
+            variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
+            whileHover={{ y:-2, scale:1.08 }}
+            href="#about"
+            className="hover:text-white transition"
+          >
+            About
+          </motion.a>
 
-<motion.a
-variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
-whileHover={{ y:-2, scale:1.08 }}
-href="#skills"
-className="hover:text-white transition"
->
-Skills
-</motion.a>
+          <motion.a
+            variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
+            whileHover={{ y:-2, scale:1.08 }}
+            href="#skills"
+            className="hover:text-white transition"
+          >
+            Skills
+          </motion.a>
 
-<motion.a
-variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
-whileHover={{ y:-2, scale:1.08 }}
-href="#projects"
-className="hover:text-white transition"
->
-Projects
-</motion.a>
+          <motion.a
+            variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
+            whileHover={{ y:-2, scale:1.08 }}
+            href="#projects"
+            className="hover:text-white transition"
+          >
+            Projects
+          </motion.a>
 
-<motion.a
-variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
-whileHover={{ y:-2, scale:1.08 }}
-href="#contact"
-className="hover:text-white transition"
->
-Contact
-</motion.a>
+          <motion.a
+            variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
+            whileHover={{ y:-2, scale:1.08 }}
+            href="#contact"
+            className="hover:text-white transition"
+          >
+            Contact
+          </motion.a>
 
-<motion.a
-variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
-whileHover={{ scale:1.08 }}
-href="https://github.com/rryoukou"
-target="_blank"
-className="ml-4 bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-lg text-white text-xs"
->
-GitHub
-</motion.a>
+          <motion.a
+            variants={{ hidden:{opacity:0,y:-10}, show:{opacity:1,y:0} }}
+            whileHover={{ scale:1.08 }}
+            href="https://github.com/rryoukou"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-4 bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-lg text-white text-xs font-medium shadow-lg shadow-blue-500/20 hover:shadow-purple-500/30 transition"
+          >
+            GitHub
+          </motion.a>
 
-</motion.div>
+        </motion.div>
 
-{/* MOBILE BUTTON */}
-<button
-onClick={()=>setOpen(!open)}
-className="md:hidden text-white"
->
-{open ? <X size={28}/> : <Menu size={28}/>}
-</button>
+        {/* MOBILE BUTTON */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-white"
+        >
+          {open ? <X size={28}/> : <Menu size={28}/>}
+        </button>
 
-</div>
+      </div>
 
-{/* MOBILE MENU */}
-{open && (
+      {/* MOBILE MENU */}
+      {open && (
 
-<motion.div
-initial={{ opacity:0, y:-20 }}
-animate={{ opacity:1, y:0 }}
-className="md:hidden flex flex-col gap-6 px-6 pb-6 text-gray-300"
->
+        <motion.div
+          initial={{ opacity:0, y:-20 }}
+          animate={{ opacity:1, y:0 }}
+          className="md:hidden flex flex-col gap-6 px-6 pb-6 text-gray-300"
+        >
 
-<a href="#about">About</a>
-<a href="#skills">Skills</a>
-<a href="#projects">Projects</a>
-<a href="#contact">Contact</a>
+          <a href="#about" onClick={()=>setOpen(false)}>About</a>
+          <a href="#skills" onClick={()=>setOpen(false)}>Skills</a>
+          <a href="#projects" onClick={()=>setOpen(false)}>Projects</a>
+          <a href="#contact" onClick={()=>setOpen(false)}>Contact</a>
 
-<a
-href="https://github.com/rryoukou"
-className="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-lg text-white text-sm w-fit"
->
-GitHub
-</a>
+          <a
+            href="https://github.com/rryoukou"
+            onClick={()=>setOpen(false)}
+            className="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-lg text-white text-sm w-fit"
+          >
+            GitHub
+          </a>
 
-</motion.div>
+        </motion.div>
 
-)}
+      )}
 
-</motion.nav>
+    </motion.nav>
 
-)
-
+  )
 }
