@@ -107,7 +107,7 @@ export default function Home() {
     <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur-2xl opacity-40"></div>
 
     <img
-      src="/profile.jpg"
+      src="/Profile.jpg"
       alt="Rryoukou profile"
       className="relative w-40 h-40 rounded-full border-4 border-gray-800 object-cover"
     />
