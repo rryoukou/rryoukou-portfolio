@@ -1,6 +1,44 @@
+"use client";
+
+import CursorGlow from "@/components/CursorGlow";
+import { TypeAnimation } from "react-type-animation";
+
 export default function Home() {
+
+  const skills = [
+    "laravel",
+    "react",
+    "tailwind",
+    "javascript",
+    "php",
+    "mysql",
+    "git",
+    "nodejs",
+  ];
+
+  const projects = [
+    {
+      title: "Movie App",
+      desc: "Web aplikasi untuk menampilkan daftar film menggunakan React.",
+      link: "https://github.com/rryoukou/Movie",
+    },
+    {
+      title: "Serbu Computer",
+      desc: "Website toko komputer menggunakan Laravel.",
+      link: "https://github.com/rryoukou/serbu-computer",
+    },
+    {
+      title: "Football Shopping",
+      desc: "Website toko jersey sepak bola menggunakan HTML & CSS.",
+      link: "https://github.com/rryoukou/football-shoping",
+    },
+  ];
+
   return (
     <main className="relative bg-black text-white overflow-hidden">
+
+      {/* CURSOR GLOW */}
+      <CursorGlow />
 
       {/* AURORA BACKGROUND */}
       <div className="absolute inset-0 -z-10">
@@ -10,7 +48,6 @@ export default function Home() {
         <div className="absolute bottom-[-200px] right-[20%] w-[600px] h-[600px] bg-purple-500 rounded-full blur-[200px] opacity-20"></div>
 
       </div>
-
 
       {/* NAVBAR */}
       <nav className="fixed top-0 left-0 w-full backdrop-blur-md bg-black/60 border-b border-gray-800 z-50">
@@ -34,13 +71,12 @@ export default function Home() {
 
       </nav>
 
-
       {/* HERO */}
       <section className="min-h-screen flex flex-col items-center justify-center text-center gap-6 pt-20 px-6">
 
         <img
           src="/profile.jpg"
-          alt="profile"
+          alt="Rryoukou profile"
           className="w-40 h-40 rounded-full border-4 border-gray-700 object-cover shadow-lg"
         />
 
@@ -48,16 +84,28 @@ export default function Home() {
           Hello I'm <span className="text-blue-500">Rryoukou</span>
         </h1>
 
-        <p className="text-gray-400 max-w-xl text-lg">
-          Fullstack Developer passionate about building modern web
-          applications with Laravel, React and modern technologies.
-        </p>
+        <TypeAnimation
+          sequence={[
+            "Fullstack Developer",
+            2000,
+            "Laravel Developer",
+            2000,
+            "React Developer",
+            2000,
+            "Building Modern Web Apps",
+            2000,
+          ]}
+          wrapper="span"
+          speed={50}
+          repeat={Infinity}
+          className="text-gray-400 text-lg"
+        />
 
         <div className="flex gap-4 mt-4">
 
           <a
             href="#projects"
-            className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg"
+            className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg transition"
           >
             View Projects
           </a>
@@ -65,7 +113,8 @@ export default function Home() {
           <a
             href="https://github.com/rryoukou"
             target="_blank"
-            className="border border-gray-600 px-6 py-3 rounded-lg hover:bg-gray-800"
+            rel="noopener noreferrer"
+            className="border border-gray-600 px-6 py-3 rounded-lg hover:bg-gray-800 transition"
           >
             GitHub
           </a>
@@ -73,7 +122,6 @@ export default function Home() {
         </div>
 
       </section>
-
 
       {/* ABOUT */}
       <section id="about" className="max-w-4xl mx-auto py-24 px-6 text-center">
@@ -92,7 +140,6 @@ export default function Home() {
 
       </section>
 
-
       {/* SKILLS */}
       <section id="skills" className="py-24 bg-black/40 backdrop-blur-sm">
 
@@ -102,16 +149,7 @@ export default function Home() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto px-6">
 
-          {[
-            "laravel",
-            "react",
-            "tailwind",
-            "javascript",
-            "php",
-            "mysql",
-            "git",
-            "nodejs"
-          ].map((skill) => (
+          {skills.map((skill) => (
 
             <div
               key={skill}
@@ -120,10 +158,11 @@ export default function Home() {
 
               <img
                 src={`https://skillicons.dev/icons?i=${skill}`}
+                alt={skill}
                 className="mx-auto mb-2"
               />
 
-              {skill}
+              <p className="capitalize">{skill}</p>
 
             </div>
 
@@ -132,7 +171,6 @@ export default function Home() {
         </div>
 
       </section>
-
 
       {/* PROJECTS */}
       <section id="projects" className="py-24">
@@ -143,72 +181,37 @@ export default function Home() {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
 
-          <div className="bg-gray-900 border border-gray-800 p-6 rounded-xl hover:border-blue-500 hover:-translate-y-1 transition">
+          {projects.map((project, index) => (
 
-            <h3 className="text-xl font-semibold mb-2">
-              Movie App
-            </h3>
-
-            <p className="text-gray-400 mb-4">
-              Web aplikasi untuk menampilkan daftar film menggunakan React.
-            </p>
-
-            <a
-              href="https://github.com/rryoukou/Movie"
-              target="_blank"
-              className="text-blue-400"
+            <div
+              key={index}
+              className="bg-gray-900 border border-gray-800 p-6 rounded-xl hover:border-blue-500 hover:-translate-y-1 transition"
             >
-              View Project →
-            </a>
 
-          </div>
+              <h3 className="text-xl font-semibold mb-2">
+                {project.title}
+              </h3>
 
+              <p className="text-gray-400 mb-4">
+                {project.desc}
+              </p>
 
-          <div className="bg-gray-900 border border-gray-800 p-6 rounded-xl hover:border-blue-500 hover:-translate-y-1 transition">
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400"
+              >
+                View Project →
+              </a>
 
-            <h3 className="text-xl font-semibold mb-2">
-              Serbu Computer
-            </h3>
+            </div>
 
-            <p className="text-gray-400 mb-4">
-              Website toko komputer menggunakan Laravel.
-            </p>
-
-            <a
-              href="https://github.com/rryoukou/serbu-computer"
-              target="_blank"
-              className="text-blue-400"
-            >
-              View Project →
-            </a>
-
-          </div>
-
-
-          <div className="bg-gray-900 border border-gray-800 p-6 rounded-xl hover:border-blue-500 hover:-translate-y-1 transition">
-
-            <h3 className="text-xl font-semibold mb-2">
-              Football Shopping
-            </h3>
-
-            <p className="text-gray-400 mb-4">
-              Website toko jersey sepak bola menggunakan HTML & CSS.
-            </p>
-
-            <a
-              href="https://github.com/rryoukou/football-shoping"
-              target="_blank"
-              className="text-blue-400"
-            >
-              View Project →
-            </a>
-
-          </div>
+          ))}
 
         </div>
 
       </section>
-
 
       {/* CONTACT */}
       <section id="contact" className="py-24 text-center">
@@ -226,6 +229,7 @@ export default function Home() {
           <a
             href="https://github.com/rryoukou"
             target="_blank"
+            rel="noopener noreferrer"
             className="bg-white text-black px-6 py-3 rounded-lg"
           >
             GitHub
@@ -241,7 +245,6 @@ export default function Home() {
         </div>
 
       </section>
-
 
       {/* FOOTER */}
       <footer className="text-center py-8 border-t border-gray-800">
