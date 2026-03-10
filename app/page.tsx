@@ -6,62 +6,71 @@ import { motion } from "framer-motion";
 export default function Home() {
 
   
-  const skills = [
-    "html",
-    "css",
-    "javascript",
-    "typescript",
-    "react",
-    "nextjs",
-    "tailwind",
-    "php",
-    "laravel",
-    "mysql",
-    "github",
-    "vercel"
-  ];
+  type Project = {
+  title: string;
+  desc: string;
+  tech: string[];
+  github: string;
+  demo: string | null;
+  image?: string;
+};
 
-  const projects = [
-    {
-      title: "Movie App",
-      desc: "Web aplikasi untuk menampilkan daftar film menggunakan React dan API film.",
-      tech: ["react", "javascript", "css"],
-      github: "https://github.com/rryoukou/Movie",
-      demo: "https://final-project-sandy-rho.vercel.app/",
-    },
+const skills = [
+  "html",
+  "css",
+  "javascript",
+  "typescript",
+  "react",
+  "nextjs",
+  "tailwind",
+  "php",
+  "laravel",
+  "mysql",
+  "github",
+  "vercel"
+];
 
-    {
-      title: "Serbu Computer",
-      desc: "Website toko komputer berbasis Laravel dengan fitur katalog produk.",
-      tech: ["laravel", "php", "mysql"],
-      github: "https://github.com/rryoukou/serbu-computer",
-      demo: null,
-    },
+const projects: Project[] = [
+  {
+    title: "Movie App",
+    desc: "Web aplikasi untuk menampilkan daftar film menggunakan React dan API film.",
+    tech: ["react", "javascript", "css"],
+    github: "https://github.com/rryoukou/Movie",
+    demo: "https://final-project-sandy-rho.vercel.app/"
+  },
 
-    {
-      title: "Football Shopping",
-      desc: "Website toko jersey sepak bola menggunakan HTML dan CSS.",
-      tech: ["html", "css"],
-      github: "https://github.com/rryoukou/football-shoping",
-      demo: null,
-    },
+  {
+    title: "Serbu Computer",
+    desc: "Website toko komputer berbasis Laravel dengan fitur katalog produk.",
+    tech: ["laravel", "php", "mysql"],
+    github: "https://github.com/rryoukou/serbu-computer",
+    demo: null
+  },
 
-    {
-      title: "Sistem Perpustakaan",
-      desc: "Website sistem peminjaman buku berbasis PHP dan MySQL dengan fitur login siswa dan transaksi peminjaman.",
-      tech: ["php", "mysql", "html", "css"],
-      github: "https://github.com/rryoukou/Perpustakaan",
-      demo: null,
-    },
+  {
+    title: "Football Shopping",
+    desc: "Website toko jersey sepak bola menggunakan HTML dan CSS.",
+    tech: ["html", "css"],
+    github: "https://github.com/rryoukou/football-shoping",
+    demo: null
+  },
 
-    {
-      title: "Portofolio Sederhana",
-      desc: "Website portofolio pribadi sederhana untuk menampilkan profil dan project.",
-      tech: ["html", "css", "javascript"],
-      github: "https://github.com/rryoukou/Portofolio-Sederhana",
-      demo: null,
-    },
-  ];
+  {
+    title: "Sistem Perpustakaan",
+    desc: "Website sistem peminjaman buku berbasis PHP dan MySQL dengan fitur login siswa dan transaksi peminjaman.",
+    tech: ["php", "mysql", "html", "css"],
+    github: "https://github.com/rryoukou/Perpustakaan",
+    demo: null
+  },
+
+  {
+    title: "Portofolio Sederhana",
+    desc: "Website portofolio pribadi sederhana untuk menampilkan profil dan project.",
+    tech: ["html", "css", "javascript"],
+    github: "https://github.com/rryoukou/Portofolio-Sederhana",
+    demo: null
+  }
+];
 
   return (
     <main className="relative bg-black text-white overflow-hidden">
