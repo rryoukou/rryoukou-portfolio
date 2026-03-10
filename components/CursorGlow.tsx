@@ -1,19 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function CursorGlow() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const glowRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+
+  const mouse = useRef({ x: 0, y: 0 });
+  const pos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
-      setPosition({
-        x: e.clientX,
-        y: e.clientY,
-      });
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
     };
 
     window.addEventListener("mousemove", move);
+
+    const animate = () => {
+      pos.current.x += (mouse.current.x - pos.current.x) * 0.15;
+      pos.current.y += (mouse.current.y - pos.current.y) * 0.15;
+
+      if (glowRef.current) {
+        glowRef.current.style.transform = `translate(${pos.current.x - 200}px, ${pos.current.y - 200}px)`;
+      }
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate(${mouse.current.x - 16}px, ${mouse.current.y - 16}px)`;
+      }
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
 
     return () => window.removeEventListener("mousemove", move);
   }, []);
@@ -22,20 +41,18 @@ export default function CursorGlow() {
     <>
       {/* Glow */}
       <div
-        className="pointer-events-none fixed z-40 h-72 w-72 rounded-full opacity-70 blur-3xl transition-all duration-200"
+        ref={glowRef}
+        className="pointer-events-none fixed z-40 h-[400px] w-[400px] rounded-full opacity-60 blur-[120px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(59,130,246,0.9) 0%, rgba(168,85,247,0.7) 40%, transparent 70%)",
-          transform: `translate(${position.x - 150}px, ${position.y - 150}px)`,
+            "radial-gradient(circle, rgba(59,130,246,0.7) 0%, rgba(168,85,247,0.6) 40%, transparent 70%)",
         }}
       />
 
       {/* Cursor Ring */}
       <div
+        ref={ringRef}
         className="pointer-events-none fixed z-50 h-8 w-8 rounded-full border border-purple-400 transition-transform duration-75"
-        style={{
-          transform: `translate(${position.x - 16}px, ${position.y - 16}px)`,
-        }}
       />
     </>
   );
