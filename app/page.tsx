@@ -372,7 +372,7 @@ className="text-5xl md:text-6xl font-bold leading-tight"
 >
 Hello I'm{" "}
 <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
-rryoukou
+ryoukou
 </span>
 </motion.h1>
 
