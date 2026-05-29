@@ -5,7 +5,6 @@ import { Github, ShieldCheck } from "lucide-react";
 import gsap from "gsap";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -215,22 +214,25 @@ const Hero = () => {
       {/* Action Buttons - Magnetic */}
       <div className="flex flex-wrap gap-6 justify-center">
         <div ref={el => { if (el) magneticBtnsRef.current[0] = el; }}>
-          <Button asChild className="rounded-xl px-10 py-7 text-xs font-black uppercase tracking-[0.2em] bg-primary text-white hover:opacity-90 shadow-[0_0_20px_rgba(var(--primary),0.4)] transition-all group overflow-hidden">
-            <a href="#work" className="flex items-center gap-2">
-              Mission Logs
-              <ShieldCheck size={18} className="group-hover:rotate-12 transition-transform" />
-              <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 skew-x-12"></div>
-            </a>
-          </Button>
+          <a 
+            href="#work" 
+            className="inline-flex items-center gap-2 rounded-xl px-10 py-7 text-xs font-black uppercase tracking-[0.2em] bg-primary text-white hover:opacity-90 shadow-[0_0_20px_rgba(var(--primary),0.4)] transition-all group overflow-hidden relative"
+          >
+            Mission Logs
+            <ShieldCheck size={18} className="group-hover:rotate-12 transition-transform" />
+            <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 skew-x-12"></div>
+          </a>
         </div>
 
         <div ref={el => { if (el) magneticBtnsRef.current[1] = el; }}>
-          <Button asChild variant="outline" className="rounded-xl px-10 py-7 text-xs font-black uppercase tracking-[0.2em] border-slate-800 hover:bg-slate-800 text-white transition-all group">
-            <a href="https://github.com/rryoukou" target="_blank" className="flex items-center gap-2">
-              <Github size={18} />
-              GitHub
-            </a>
-          </Button>
+          <a 
+            href="https://github.com/rryoukou" 
+            target="_blank" 
+            className="inline-flex items-center gap-2 rounded-xl px-10 py-7 text-xs font-black uppercase tracking-[0.2em] border border-slate-800 hover:bg-slate-800 text-white transition-all group"
+          >
+            <Github size={18} />
+            GitHub
+          </a>
         </div>
       </div>
 
