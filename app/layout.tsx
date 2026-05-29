@@ -13,8 +13,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ryoukou | Fullstack Developer",
-  description: "Portfolio ryoukou",
+  title: "Ryoukou | Fullstack Developer Portfolio",
+  description: "Explore the portfolio of Ryoukou Arya Nugroho, a Fullstack Developer specializing in building high-performance web applications with Next.js, React, and Laravel.",
+  keywords: ["Ryoukou Arya Nugroho", "Fullstack Developer", "Portfolio", "Next.js", "Laravel", "React", "Web Development"],
+  authors: [{ name: "Ryoukou Arya Nugroho" }],
+  openGraph: {
+    title: "Ryoukou | Fullstack Developer Portfolio",
+    description: "Building modern, scalable web applications with Next.js and Laravel.",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export const viewport: Viewport = {
@@ -28,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
