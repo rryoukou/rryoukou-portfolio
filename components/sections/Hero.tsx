@@ -43,112 +43,100 @@ const Hero = () => {
   };
 
   useEffect(() => {
+    if (!heroRef.current) return;
+
     const mm = gsap.matchMedia();
-
-    // 2. Main Entry Animations
     const ctx = gsap.context(() => {
-      if (titleRef.current) scrambleText(titleRef.current, "The Friendly Neighborhood Developer");
+      // 1. Stark Decryption Effect
+      if (titleRef.current) {
+        scrambleText(titleRef.current, "The Friendly Neighborhood Developer");
+      }
 
-      // 3. Dynamic GSAP Typewriter Loop
+      // 2. Dynamic GSAP Typewriter Loop
       const subPhrases = ["Fullstack Developer", "Next.js Specialist", "Laravel Artisan", "Friendly Neighborhood Coder"];
       let currentPhraseIndex = 0;
-      
-      const typeLoop = () => {
-        if (!subTitleRef.current) return;
-        const phrase = subPhrases[currentPhraseIndex];
-        
-        gsap.to(subTitleRef.current, {
-          duration: 2,
-          text: phrase,
-          ease: "none",
-          onComplete: () => {
-            gsap.delayedCall(1.5, () => {
-              gsap.to(subTitleRef.current, {
-                duration: 1,
-                text: "",
-                ease: "none",
-                onComplete: () => {
-                  currentPhraseIndex = (currentPhraseIndex + 1) % subPhrases.length;
-                  typeLoop();
-                }
-              });
-            });
-          }
-        });
-      };
-      
-      // Load GSAP TextPlugin dynamically if needed, but we'll use a simple version here
-      // To keep it simple without extra plugins:
       let charIndex = 0;
-      const simpleTypewriter = () => {
+      let isTyping = true;
+      
+      const updateTypewriter = () => {
         if (!subTitleRef.current) return;
-        const phrase = subPhrases[currentPhraseIndex];
-        subTitleRef.current.innerText = phrase.substring(0, charIndex);
         
-        if (charIndex < phrase.length) {
-          charIndex++;
-          setTimeout(simpleTypewriter, 70);
+        const phrase = subPhrases[currentPhraseIndex];
+        
+        if (isTyping) {
+          subTitleRef.current.innerText = phrase.substring(0, charIndex);
+          if (charIndex < phrase.length) {
+            charIndex++;
+            gsap.delayedCall(0.07, updateTypewriter);
+          } else {
+            isTyping = false;
+            gsap.delayedCall(2, updateTypewriter);
+          }
         } else {
-          setTimeout(eraseText, 2000);
+          subTitleRef.current.innerText = phrase.substring(0, charIndex);
+          if (charIndex > 0) {
+            charIndex--;
+            gsap.delayedCall(0.04, updateTypewriter);
+          } else {
+            isTyping = true;
+            currentPhraseIndex = (currentPhraseIndex + 1) % subPhrases.length;
+            gsap.delayedCall(0.5, updateTypewriter);
+          }
         }
       };
 
-      const eraseText = () => {
-        if (!subTitleRef.current) return;
-        const phrase = subPhrases[currentPhraseIndex];
-        subTitleRef.current.innerText = phrase.substring(0, charIndex);
-        
-        if (charIndex > 0) {
-          charIndex--;
-          setTimeout(eraseText, 40);
-        } else {
-          currentPhraseIndex = (currentPhraseIndex + 1) % subPhrases.length;
-          setTimeout(simpleTypewriter, 500);
-        }
-      };
+      updateTypewriter();
 
-      simpleTypewriter();
-
-      // 4. Parallax & Magnetic for Desktop Only
+      // 3. Parallax & Magnetic for Desktop Only
       mm.add("(min-width: 1024px)", () => {
         const onMouseMove = (e: MouseEvent) => {
+          if (!heroRef.current) return;
+          
           const { clientX, clientY } = e;
           const centerX = window.innerWidth / 2;
           const centerY = window.innerHeight / 2;
 
           // Subtle Parallax
-          gsap.to(parallaxBgRef.current, {
-            x: (clientX - centerX) * 0.05,
-            y: (clientY - centerY) * 0.05,
-            duration: 1.5,
-            ease: "power2.out"
-          });
+          if (parallaxBgRef.current) {
+            gsap.to(parallaxBgRef.current, {
+              x: (clientX - centerX) * 0.05,
+              y: (clientY - centerY) * 0.05,
+              duration: 1.5,
+              ease: "power2.out"
+            });
+          }
 
-          gsap.to(avatarRef.current, {
-            x: (clientX - centerX) * -0.03,
-            y: (clientY - centerY) * -0.03,
-            duration: 1.5,
-            ease: "power2.out"
-          });
+          if (avatarRef.current) {
+            gsap.to(avatarRef.current, {
+              x: (clientX - centerX) * -0.03,
+              y: (clientY - centerY) * -0.03,
+              duration: 1.5,
+              ease: "power2.out"
+            });
+          }
 
           // Magnetic Buttons
           magneticBtnsRef.current.forEach((btn) => {
             if (!btn) return;
-            const rect = btn.getBoundingClientRect();
-            const btnCenterX = rect.left + rect.width / 2;
-            const btnCenterY = rect.top + rect.height / 2;
-            const dist = Math.hypot(clientX - btnCenterX, clientY - btnCenterY);
+            try {
+              const rect = btn.getBoundingClientRect();
+              const btnCenterX = rect.left + rect.width / 2;
+              const btnCenterY = rect.top + rect.height / 2;
+              const dist = Math.hypot(clientX - btnCenterX, clientY - btnCenterY);
 
-            if (dist < 100) {
-              gsap.to(btn, {
-                x: (clientX - btnCenterX) * 0.4,
-                y: (clientY - btnCenterY) * 0.4,
-                scale: 1.05,
-                duration: 0.5,
-                ease: "power2.out"
-              });
-            } else {
-              gsap.to(btn, { x: 0, y: 0, scale: 1, duration: 0.5, ease: "power2.out" });
+              if (dist < 100) {
+                gsap.to(btn, {
+                  x: (clientX - btnCenterX) * 0.4,
+                  y: (clientY - btnCenterY) * 0.4,
+                  scale: 1.05,
+                  duration: 0.5,
+                  ease: "power2.out"
+                });
+              } else {
+                gsap.to(btn, { x: 0, y: 0, scale: 1, duration: 0.5, ease: "power2.out" });
+              }
+            } catch (err) {
+              console.error("Error in magnetic button animation:", err);
             }
           });
         };
@@ -156,7 +144,7 @@ const Hero = () => {
         window.addEventListener("mousemove", onMouseMove);
         return () => window.removeEventListener("mousemove", onMouseMove);
       });
-    }, heroRef);
+    }, heroRef.current);
 
     return () => {
       ctx.revert();
@@ -213,7 +201,7 @@ const Hero = () => {
 
       {/* Action Buttons - Magnetic */}
       <div className="flex flex-wrap gap-6 justify-center">
-        <div ref={el => { if (el) magneticBtnsRef.current[0] = el; }}>
+        <div ref={el => { magneticBtnsRef.current[0] = el; }}>
           <a 
             href="#work" 
             className="inline-flex items-center gap-2 rounded-xl px-10 py-7 text-xs font-black uppercase tracking-[0.2em] bg-primary text-white hover:opacity-90 shadow-[0_0_20px_rgba(var(--primary),0.4)] transition-all group overflow-hidden relative"
@@ -224,7 +212,7 @@ const Hero = () => {
           </a>
         </div>
 
-        <div ref={el => { if (el) magneticBtnsRef.current[1] = el; }}>
+        <div ref={el => { magneticBtnsRef.current[1] = el; }}>
           <a 
             href="https://github.com/rryoukou" 
             target="_blank" 
