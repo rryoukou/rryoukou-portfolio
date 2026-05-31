@@ -12,8 +12,9 @@ const Contact = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Scramble Text Effect Logic
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+  
   const scrambleText = (finalText: string, callback: (text: string) => void) => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
     let iteration = 0;
     const interval = setInterval(() => {
       callback(

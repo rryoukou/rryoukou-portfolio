@@ -12,6 +12,26 @@ const Experience = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [scrambledTitle, setScrambledTitle] = useState("Mission History");
 
+  // Scramble Text Logic
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+  
+  const scrambleText = (finalText: string) => {
+    let iteration = 0;
+    const interval = setInterval(() => {
+      setScrambledTitle(
+        finalText
+          .split("")
+          .map((char, index) => {
+            if (index < iteration) return finalText[index];
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("")
+      );
+      if (iteration >= finalText.length) clearInterval(interval);
+      iteration += 1 / 3;
+    }, 30);
+  };
+
   const events = [
     {
       title: "Self-Taught Web Developer",
@@ -35,25 +55,6 @@ const Experience = () => {
       color: "bg-red-600"
     }
   ];
-
-  // Scramble Text Logic
-  const scrambleText = (finalText: string) => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-    let iteration = 0;
-    const interval = setInterval(() => {
-      setScrambledTitle(
-        finalText
-          .split("")
-          .map((char, index) => {
-            if (index < iteration) return finalText[index];
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join("")
-      );
-      if (iteration >= finalText.length) clearInterval(interval);
-      iteration += 1 / 3;
-    }, 30);
-  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {

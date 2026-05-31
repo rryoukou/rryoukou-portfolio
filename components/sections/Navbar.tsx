@@ -15,15 +15,10 @@ const Navbar = () => {
   const neuralBtnRef = useRef<HTMLAnchorElement>(null);
   const lastScrollY = useRef(0);
 
-  const navItems = [
-    { name: "Mission History", link: "#experience" },
-    { name: "Mission Logs", link: "#work" },
-    { name: "Secure Link", link: "#contact" },
-  ];
-
   // Scramble Text Logic for Logo
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+  
   const scrambleText = (el: HTMLElement, originalText: string) => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
     let iteration = 0;
     const interval = setInterval(() => {
       el.innerText = originalText
@@ -37,6 +32,12 @@ const Navbar = () => {
       iteration += 1 / 3;
     }, 30);
   };
+
+  const navItems = [
+    { name: "Mission History", link: "#experience" },
+    { name: "Mission Logs", link: "#work" },
+    { name: "Secure Link", link: "#contact" },
+  ];
 
   useEffect(() => {
     // 1. Smart Scroll Navigation (Stealth Mode)

@@ -11,6 +11,35 @@ gsap.registerPlugin(ScrollTrigger);
 const BentoGrid = () => {
   const gridRef = useRef<HTMLDivElement>(null);
 
+  // Custom Scramble Effect
+  const chars = "!<>-_\\/[]{}—=+*^?#________";
+  
+  const scrambleText = (el: HTMLElement, newText: string) => {
+    let frame = 0;
+    const duration = 40; // frames
+    
+    const animate = () => {
+      let output = "";
+      let complete = 0;
+      for (let i = 0; i < newText.length; i++) {
+        const char = newText[i];
+        const delay = (i / newText.length) * duration;
+        if (frame >= delay) {
+          output += char;
+          complete++;
+        } else {
+          output += chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+      el.innerText = output;
+      if (complete < newText.length) {
+        frame++;
+        requestAnimationFrame(animate);
+      }
+    };
+    animate();
+  };
+
   const skills = {
     frontend: ["react", "nextjs", "typescript", "tailwind"],
     backend: ["php", "laravel", "mysql"],
@@ -55,34 +84,6 @@ const BentoGrid = () => {
       icon: <Rocket className="text-primary" />
     }
   ];
-
-  // Custom Scramble Effect
-  const scrambleText = (el: HTMLElement, newText: string) => {
-    const chars = "!<>-_\\/[]{}—=+*^?#________";
-    let frame = 0;
-    const duration = 40; // frames
-    
-    const animate = () => {
-      let output = "";
-      let complete = 0;
-      for (let i = 0; i < newText.length; i++) {
-        const char = newText[i];
-        const delay = (i / newText.length) * duration;
-        if (frame >= delay) {
-          output += char;
-          complete++;
-        } else {
-          output += chars[Math.floor(Math.random() * chars.length)];
-        }
-      }
-      el.innerText = output;
-      if (complete < newText.length) {
-        frame++;
-        requestAnimationFrame(animate);
-      }
-    };
-    animate();
-  };
 
   useEffect(() => {
     // 1. Initial GSAP Set to prevent flash/stuck state

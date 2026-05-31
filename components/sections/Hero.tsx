@@ -15,8 +15,9 @@ const Hero = () => {
   const magneticBtnsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   // 1. Stark Decryption Effect
+  const chars = "!<>-_\\/[]{}—=+*^?#________";
+  
   const scrambleText = (el: HTMLElement, newText: string) => {
-    const chars = "!<>-_\\/[]{}—=+*^?#________";
     let frame = 0;
     const duration = 50; 
     
