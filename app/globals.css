@@ -67,7 +67,7 @@ body {
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.55 0.25 25);
+  --primary: oklch(0.45 0.2 280); /* Deep Sasuke Purple/Blue */
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -83,30 +83,41 @@ body {
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695); /* Slate 950 */
+  --background: oklch(0.1 0.02 280); /* Deep Shadowy Blue */
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.141 0.042 265.755); /* Slate 900 */
+  --card: oklch(0.12 0.02 280); /* Slightly lighter shadow */
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.141 0.042 265.755);
+  --popover: oklch(0.12 0.02 280);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.55 0.25 25); /* Crimson Red */
+  --primary: oklch(0.55 0.2 280); /* Electric Chidori Blue/Purple */
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.269 0 0);
+  --secondary: oklch(0.2 0.02 280);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  --muted: oklch(0.2 0.02 280);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.55 0.25 25);
+  --accent: oklch(0.55 0.2 280);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.55 0.25 25);
-  --border: oklch(0.217 0.042 265.755); /* Slate 800 */
-  --input: oklch(0.217 0.042 265.755);
-  --ring: oklch(0.55 0.25 25);
+  --destructive: oklch(0.55 0.2 280);
+  --border: oklch(0.15 0.02 280);
+  --input: oklch(0.15 0.02 280);
+  --ring: oklch(0.55 0.2 280);
   --radius: 0.75rem;
 }
 
 .text-primary { color: var(--primary); }
 .border-primary { border-color: var(--primary); }
 .bg-primary { background-color: var(--primary); }
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 .shadow-primary { --tw-shadow-color: var(--primary); }
 
 @layer base {

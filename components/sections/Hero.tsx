@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Github, ShieldCheck } from "lucide-react";
+import { Github, Zap } from "lucide-react";
 import gsap from "gsap";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,12 +14,12 @@ const Hero = () => {
   const avatarRef = useRef<HTMLDivElement>(null);
   const magneticBtnsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // 1. Stark Decryption Effect
-  const chars = "!<>-_\\/[]{}—=+*^?#________";
+  // 1. Chidori Awakening Reveal Effect
+  const lightningChars = "⚡—~-^/\\*+><[]{}";
   
-  const scrambleText = (el: HTMLElement, newText: string) => {
+  const chidoriReveal = (el: HTMLElement, newText: string) => {
     let frame = 0;
-    const duration = 50; 
+    const duration = 60; 
     
     const animate = () => {
       let output = "";
@@ -27,11 +27,17 @@ const Hero = () => {
       for (let i = 0; i < newText.length; i++) {
         const char = newText[i];
         const delay = (i / newText.length) * duration;
+        
         if (frame >= delay) {
-          output += char;
-          complete++;
+          // Flickering effect before settling
+          if (frame < delay + 10 && Math.random() > 0.5) {
+            output += lightningChars[Math.floor(Math.random() * lightningChars.length)];
+          } else {
+            output += char;
+            complete++;
+          }
         } else {
-          output += chars[Math.floor(Math.random() * chars.length)];
+          output += Math.random() > 0.8 ? lightningChars[Math.floor(Math.random() * lightningChars.length)] : " ";
         }
       }
       el.innerText = output;
@@ -48,13 +54,13 @@ const Hero = () => {
 
     const mm = gsap.matchMedia();
     const ctx = gsap.context(() => {
-      // 1. Stark Decryption Effect
+      // 1. Chidori Awakening Reveal Effect
       if (titleRef.current) {
-        scrambleText(titleRef.current, "The Friendly Neighborhood Developer");
+        chidoriReveal(titleRef.current, "The Last Descendant of Uchiha");
       }
 
       // 2. Dynamic GSAP Typewriter Loop
-      const subPhrases = ["Fullstack Developer", "Next.js Specialist", "Laravel Artisan", "Friendly Neighborhood Coder"];
+      const subPhrases = ["Uchiha Prodigy", "Chidori Specialist", "Next.js Visionary", "Shadow Shinobi"];
       let currentPhraseIndex = 0;
       let charIndex = 0;
       let isTyping = true;
@@ -155,10 +161,10 @@ const Hero = () => {
 
   return (
     <section ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 overflow-hidden bg-slate-950">
-      {/* Background HUD Layer */}
+      {/* Background Chakra Layer */}
       <div ref={parallaxBgRef} className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/10 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-slate-800/20 blur-[100px] rounded-full"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-indigo-900/20 blur-[100px] rounded-full"></div>
         <div className="absolute inset-0 bg-[radial-gradient(var(--primary)_0.5px,transparent_0.5px)] [background-size:32px_32px] opacity-[0.04]"></div>
       </div>
 
@@ -180,7 +186,7 @@ const Hero = () => {
 
       {/* Main Content */}
       <h1 ref={titleRef} className="text-4xl md:text-7xl font-black tracking-tighter mb-4 text-white uppercase italic">
-        The Friendly Neighborhood Developer
+        The Last Descendant of Uchiha
       </h1>
 
       <div className="h-10 mb-6">
@@ -195,9 +201,9 @@ const Hero = () => {
         transition={{ delay: 1, duration: 1 }}
         className="max-w-xl text-slate-500 text-sm md:text-base leading-relaxed mb-10"
       >
-        Solving complex problems with Stark-Tech precision. Specialized in 
+        Solving complex problems with Uchiha mastery. Specialized in 
         <span className="text-primary mx-1 font-bold">Next.js</span>, 
-        <span className="text-primary mx-1 font-bold">Laravel</span>, and high-performance neural web slingers.
+        <span className="text-primary mx-1 font-bold">Laravel</span>, and lightning-fast Chidori-optimized code.
       </motion.p>
 
       {/* Action Buttons - Magnetic */}
@@ -207,8 +213,8 @@ const Hero = () => {
             href="#work" 
             className="inline-flex items-center gap-2 rounded-xl px-10 py-7 text-xs font-black uppercase tracking-[0.2em] bg-primary text-white hover:opacity-90 shadow-[0_0_20px_rgba(var(--primary),0.4)] transition-all group overflow-hidden relative"
           >
-            Mission Logs
-            <ShieldCheck size={18} className="group-hover:rotate-12 transition-transform" />
+            Shinobi Missions
+            <Zap size={18} className="group-hover:rotate-12 transition-transform" />
             <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 skew-x-12"></div>
           </a>
         </div>
@@ -225,13 +231,13 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* HUD Scanning Indicator */}
+      {/* Chakra Sensing Indicator */}
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-10 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] text-primary/50 uppercase tracking-[0.4em] font-bold">Scanning Biometrics</span>
+        <span className="text-[10px] text-primary/50 uppercase tracking-[0.4em] font-bold">Sensing Chakra</span>
         <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent animate-pulse"></div>
       </motion.div>
 

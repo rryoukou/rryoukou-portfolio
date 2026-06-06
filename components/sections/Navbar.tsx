@@ -35,8 +35,8 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Mission History", link: "#experience" },
-    { name: "Mission Logs", link: "#work" },
-    { name: "Secure Link", link: "#contact" },
+    { name: "Shinobi Missions", link: "#work" },
+    { name: "Chakra Link", link: "#contact" },
   ];
 
   useEffect(() => {
@@ -59,10 +59,10 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    // 2. Neural Link Constant Pulse
+    // 2. Chakra Link Constant Pulse
     if (neuralBtnRef.current) {
         gsap.to(neuralBtnRef.current, {
-            boxShadow: "0 0 20px rgba(220, 38, 38, 0.6)",
+            boxShadow: "0 0 20px rgba(120, 80, 255, 0.6)",
             duration: 1,
             repeat: -1,
             yoyo: true,
@@ -93,7 +93,7 @@ const Navbar = () => {
     });
   };
 
-  // 4. Magnetic Neural Link Button
+  // 4. Magnetic Chakra Link Button
   const handleMagneticMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const { currentTarget: target } = e;
     const rect = target.getBoundingClientRect();
@@ -136,11 +136,11 @@ const Navbar = () => {
     <nav
       ref={navRef}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "backdrop-blur-xl bg-slate-950/80 border-b border-red-600/30 py-3" : "bg-transparent py-5"
+        scrolled ? "backdrop-blur-xl bg-slate-950/80 border-b border-primary/30 py-3" : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6">
-        {/* LOGO - Authentication Glitch */}
+        {/* LOGO - Uchiha Authentication */}
         <div
           ref={logoRef}
           onMouseEnter={() => {
@@ -149,8 +149,8 @@ const Navbar = () => {
           }}
           className="flex items-center gap-2 cursor-pointer group"
         >
-          <div className="p-2 rounded-lg bg-red-600/10 border border-red-600/30 group-hover:bg-red-600 group-hover:border-red-600 transition-all">
-            <Zap size={20} className="text-red-600 group-hover:text-white transition-colors" />
+          <div className="p-2 rounded-lg bg-primary/10 border border-primary/30 group-hover:bg-primary group-hover:border-primary transition-all">
+            <Zap size={20} className="text-primary group-hover:text-white transition-colors" />
           </div>
           <h1 className="font-black text-2xl tracking-tighter text-white uppercase italic w-[120px]">
             RYOUKOU
@@ -174,7 +174,7 @@ const Navbar = () => {
           {/* Sliding Underline */}
           <div 
             ref={underlineRef}
-            className="absolute bottom-0 h-[2px] bg-red-600 opacity-0 pointer-events-none shadow-[0_0_10px_rgba(220,38,38,0.8)]"
+            className="absolute bottom-0 h-[2px] bg-primary opacity-0 pointer-events-none shadow-[0_0_10px_rgba(var(--primary),0.8)]"
           ></div>
 
           <a
@@ -182,17 +182,17 @@ const Navbar = () => {
             onMouseMove={handleMagneticMove}
             onMouseLeave={handleMagneticLeave}
             href="#contact"
-            className="flex items-center gap-2 px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest text-white bg-red-600 hover:bg-red-700 shadow-lg shadow-red-900/20 transition-all relative overflow-hidden"
+            className="flex items-center gap-2 px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest text-white bg-primary hover:bg-primary/90 shadow-lg shadow-indigo-900/20 transition-all relative overflow-hidden"
           >
             <Github size={14} className="nav-icon" />
-            Neural Link
+            Chakra Link
           </a>
         </div>
 
         {/* MOBILE BUTTON */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-red-600 p-2 border border-red-600/30 rounded-lg"
+          className="md:hidden text-primary p-2 border border-primary/30 rounded-lg"
         >
           <div className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${open ? "rotate-45 translate-y-2" : ""}`}></div>
           <div className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${open ? "opacity-0" : ""}`}></div>
@@ -202,14 +202,14 @@ const Navbar = () => {
 
       {/* MOBILE MENU */}
       {open && (
-        <div className="md:hidden bg-slate-950/95 backdrop-blur-2xl border-b border-red-600/30 overflow-hidden h-auto py-6">
+        <div className="md:hidden bg-slate-950/95 backdrop-blur-2xl border-b border-primary/30 overflow-hidden h-auto py-6">
           <div className="flex flex-col gap-4 px-6">
             {navItems.map((item, i) => (
               <a
                 key={i}
                 href={item.link}
                 onClick={() => setOpen(false)}
-                className="text-sm font-bold uppercase tracking-widest text-slate-300 hover:text-red-600"
+                className="text-sm font-bold uppercase tracking-widest text-slate-300 hover:text-primary"
               >
                 {item.name}
               </a>
@@ -217,9 +217,9 @@ const Navbar = () => {
             <a
               href="#contact"
               onClick={() => setOpen(false)}
-              className="w-full py-3 rounded-lg bg-red-600 text-white text-center text-xs font-black uppercase tracking-widest"
+              className="w-full py-3 rounded-lg bg-primary text-white text-center text-xs font-black uppercase tracking-widest"
             >
-              Neural Link
+              Chakra Link
             </a>
           </div>
         </div>

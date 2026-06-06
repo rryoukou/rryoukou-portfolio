@@ -30,21 +30,21 @@ const MouseFollower = () => {
 
   return (
     <>
-      {/* Outer HUD Ring - Crimson Red */}
+      {/* Outer HUD Ring - Sasuke Purple */}
       <div
         ref={followerRef}
-        className="fixed top-0 left-0 w-12 h-12 border border-red-600/30 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+        className="fixed top-0 left-0 w-12 h-12 border border-primary/30 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block"
       >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-2 bg-red-600"></div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-2 bg-red-600"></div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[1px] w-2 bg-red-600"></div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-[1px] w-2 bg-red-600"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-2 bg-primary"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-2 bg-primary"></div>
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[1px] w-2 bg-primary"></div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-[1px] w-2 bg-primary"></div>
       </div>
 
-      {/* Inner Red Core - Neon Effect */}
+      {/* Inner Blue Core - Chidori Effect */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-2 h-2 bg-red-500 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block shadow-[0_0_10px_#ef4444]"
+        className="fixed top-0 left-0 w-2 h-2 bg-indigo-400 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block shadow-[0_0_10px_#818cf8]"
       />
     </>
   );

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Mail, Github, Linkedin, Send, ShieldCheck } from "lucide-react";
+import { Mail, Github, Linkedin, Send, Zap } from "lucide-react";
 import gsap from "gsap";
 import { Button } from "@/components/ui/button";
 
@@ -47,10 +47,10 @@ const Contact = () => {
         ease: "none",
       }).to(buttonRef.current, { x: 0, y: 0, duration: 0.1 });
 
-      scrambleText("TRANSMITTING DATA... [ENCRYPTED]", setBtnText);
+      scrambleText("TRANSMITTING CHAKRA... [ENCRYPTED]", setBtnText);
     }
     
-    // Simulate Stark Tech Data Transmission
+    // Simulate Uchiha Chakra Transmission
     setTimeout(() => {
       // Elegant Fade Out Form
       if (formRef.current) {
@@ -112,13 +112,13 @@ const Contact = () => {
     const parent = e.target.parentElement;
     if (parent) {
       gsap.to(e.target, {
-        borderColor: "rgba(220, 38, 38, 0.8)",
-        boxShadow: "0 0 15px rgba(220, 38, 38, 0.4)",
+        borderColor: "var(--primary)",
+        boxShadow: "0 0 15px rgba(120, 80, 255, 0.4)",
         duration: 0.3,
       });
       // Add pulsing effect to the shadow
       gsap.to(e.target, {
-        boxShadow: "0 0 25px rgba(220, 38, 38, 0.6)",
+        boxShadow: "0 0 25px rgba(120, 80, 255, 0.6)",
         duration: 0.8,
         repeat: -1,
         yoyo: true,
@@ -139,18 +139,18 @@ const Contact = () => {
   return (
     <section id="contact" className="py-32 px-6 bg-slate-950 relative overflow-hidden">
       {/* Background HUD Scanline */}
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-red-600/20 animate-scanline"></div>
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-primary/20 animate-scanline"></div>
       
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-start relative z-10">
         
         {/* Left Side: Briefing */}
         <div data-aos="fade-right">
-          <h2 className="text-sm font-bold text-red-600 uppercase tracking-[0.3em] mb-3">Secure Connection</h2>
-          <h3 className="text-4xl md:text-5xl font-black text-white italic mb-8">Establish Neural Link</h3>
+          <h2 className="text-sm font-bold text-primary uppercase tracking-[0.3em] mb-3">Secure Connection</h2>
+          <h3 className="text-4xl md:text-5xl font-black text-white italic mb-8">Establish Chakra Link</h3>
           <p className="text-slate-400 text-lg mb-12 leading-relaxed">
             Ready to collaborate on the next high-stakes mission? 
-            Send an encrypted message or connect via the neural links below. 
-            Response time: <span className="text-red-500 font-bold italic">Spider-Speed</span>.
+            Send an encrypted message or connect via the chakra links below. 
+            Response time: <span className="text-primary font-bold italic">Uchiha-Speed</span>.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
@@ -164,30 +164,30 @@ const Contact = () => {
                 href={item.link}
                 onMouseMove={handleMagneticMove}
                 onMouseLeave={handleMagneticLeave}
-                className="flex flex-col items-center p-6 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-red-600/50 hover:bg-slate-900 transition-all group relative overflow-hidden"
+                className="flex flex-col items-center p-6 rounded-xl bg-slate-900/40 border border-slate-800 hover:border-primary/50 hover:bg-slate-900 transition-all group relative overflow-hidden"
               >
-                <div className="text-slate-500 group-hover:text-red-500 transition-colors mb-2 pointer-events-none">
+                <div className="text-slate-500 group-hover:text-primary transition-colors mb-2 pointer-events-none">
                   {item.icon}
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-white pointer-events-none">
                   {item.name}
                 </span>
                 {/* HUD Reticle Corners */}
-                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-red-600/0 group-hover:border-red-600/50 transition-all"></div>
-                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-red-600/0 group-hover:border-red-600/50 transition-all"></div>
-                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-red-600/0 group-hover:border-red-600/50 transition-all"></div>
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-red-600/0 group-hover:border-red-600/50 transition-all"></div>
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary/0 group-hover:border-primary/50 transition-all"></div>
+                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary/0 group-hover:border-primary/50 transition-all"></div>
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary/0 group-hover:border-primary/50 transition-all"></div>
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary/0 group-hover:border-primary/50 transition-all"></div>
               </a>
             ))}
           </div>
 
-          <div className="p-4 rounded-lg bg-red-600/5 border border-red-900/20">
-             <div className="flex items-center gap-3 text-red-500 mb-2">
-               <ShieldCheck size={16} />
-               <span className="text-[10px] font-black uppercase tracking-widest">Security Protocol</span>
+          <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+             <div className="flex items-center gap-3 text-primary mb-2">
+               <Zap size={16} />
+               <span className="text-[10px] font-black uppercase tracking-widest">Genjutsu Protocol</span>
              </div>
              <p className="text-[10px] text-slate-500 italic">
-               All transmissions are encrypted via Stark Industries high-level security protocols.
+               All transmissions are encrypted via Uchiha Clan high-level Genjutsu protocols.
              </p>
           </div>
         </div>
@@ -196,13 +196,13 @@ const Contact = () => {
         <div data-aos="fade-left" className="relative p-8 rounded-3xl bg-slate-900/40 border border-slate-800 backdrop-blur-xl min-h-[400px] flex flex-col justify-center">
           {status === "success" ? (
             <div ref={successRef} className="success-msg flex flex-col items-center justify-center py-20 text-center">
-              <div className="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(220,38,38,0.4)]">
-                <ShieldCheck className="text-white" size={32} />
+              <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(var(--primary),0.4)]">
+                <Zap className="text-white" size={32} />
               </div>
-              <h4 className="text-2xl font-black text-white italic uppercase tracking-tighter">Neural Link Established</h4>
-              <p className="text-red-500 font-bold tracking-[0.2em] text-xs mt-2">ACCESS GRANTED.</p>
+              <h4 className="text-2xl font-black text-white italic uppercase tracking-tighter">Chakra Link Established</h4>
+              <p className="text-primary font-bold tracking-[0.2em] text-xs mt-2">ACCESS GRANTED.</p>
               <p className="text-slate-400 mt-4 text-sm italic">Transmission payload delivered successfully.</p>
-              <Button onClick={() => setStatus("idle")} variant="link" className="text-red-500 mt-8 uppercase tracking-widest font-black text-[10px] hover:text-white transition-colors">Terminate & Re-link</Button>
+              <Button onClick={() => setStatus("idle")} variant="link" className="text-primary mt-8 uppercase tracking-widest font-black text-[10px] hover:text-white transition-colors">Terminate & Re-link</Button>
             </div>
           ) : (
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
@@ -244,7 +244,7 @@ const Contact = () => {
                 ref={buttonRef}
                 disabled={status === "sending"} 
                 type="submit" 
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-black uppercase tracking-[0.2em] py-6 rounded-xl shadow-lg shadow-red-900/30 transition-all group overflow-hidden"
+                className="w-full bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-[0.2em] py-6 rounded-xl shadow-lg shadow-indigo-900/30 transition-all group overflow-hidden"
               >
                 {status === "sending" ? (
                   <span className="flex items-center gap-2">

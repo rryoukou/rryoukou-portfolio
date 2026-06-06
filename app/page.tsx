@@ -54,7 +54,7 @@ export default function Home() {
       >
         {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} className="animate-pulse" />}
         <span className="absolute left-14 top-1/2 -translate-y-1/2 px-3 py-1 bg-slate-900 border border-primary/20 text-[8px] font-black uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 transition-opacity rounded-lg pointer-events-none">
-          {isMuted ? "Enable Neural Audio" : "Neural Link Active"}
+          {isMuted ? "Enable Chakra Audio" : "Chakra Link Active"}
         </span>
       </button>
     </main>
