@@ -146,7 +146,7 @@ export default function Footer() {
               in Indonesia
             </p>
             <SpotlightCard
-              spotlightColor="rgba(124,58,237,0.08)"
+              spotlightColor={"rgba(124,58,237,0.08)" as `rgba(${number}, ${number}, ${number}, ${number})`}
               className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-100 rounded-sm shadow-sm"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
