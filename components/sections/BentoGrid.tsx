@@ -1,311 +1,223 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Github, ExternalLink, Mail, Linkedin, Code2, Rocket, Terminal, Database, Globe, Flame, Newspaper, Zap } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useRef } from "react";
+import { motion } from "framer-motion";
+import { Github, ExternalLink, Rocket, Terminal, Database, Globe, Code2, ArrowUpRight } from "lucide-react";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
+import DecryptedText from "@/components/reactbits/DecryptedText";
+import GlitchText from "@/components/reactbits/GlitchText";
+import AnimatedContent from "@/components/reactbits/AnimatedContent";
+import ShinyText from "@/components/reactbits/ShinyText";
 
-gsap.registerPlugin(ScrollTrigger);
+
+const skills = [
+  { category: "Frontend", items: ["react","nextjs","typescript","tailwind"] },
+  { category: "Backend",  items: ["php","laravel","mysql"] },
+  { category: "Tools",    items: ["github","vercel","figma"] },
+];
+
+const projects = [
+  {
+    num: "01", title: "CineTrack",
+    desc: "Advanced visual system for cinematic archives. Rapid data extraction with precision-engineered UX.",
+    tech: ["React","API","JS"],
+    github: "https://github.com/rryoukou/Movie",
+    demo: "https://final-project-sandy-rho.vercel.app/",
+    icon: Globe, featured: true,
+  },
+  {
+    num: "02", title: "PC Hardware Store",
+    desc: "Full-featured e-commerce hub for computer hardware. Laravel backend with real-time stock management.",
+    tech: ["Laravel","PHP","Tailwind"],
+    github: "https://github.com/rryoukou/serbu-computer",
+    demo: "https://serbucomputer.web.id/",
+    icon: Terminal, featured: false,
+  },
+  {
+    num: "03", title: "Library Management System",
+    desc: "Library management system with multi-layer authentication and borrowing tracking.",
+    tech: ["PHP","MySQL"],
+    github: "https://github.com/rryoukou/Perpustakaan",
+    demo: null,
+    icon: Database, featured: false,
+  },
+  {
+    num: "04", title: "Football Gear Shop",
+    desc: "Football gear marketplace with clean product catalog and cart system.",
+    tech: ["HTML","CSS"],
+    github: "https://github.com/rryoukou/football-shoping",
+    demo: null,
+    icon: Rocket, featured: false,
+  },
+];
 
 const BentoGrid = () => {
-  const gridRef = useRef<HTMLDivElement>(null);
-
-  // Custom Scramble Effect
-  const chars = "!<>-_\\/[]{}—=+*^?#________";
-  
-  // Chidori Awakening Reveal Effect
-  const lightningChars = "⚡—~-^/\\*+><[]{}";
-  
-  const chidoriReveal = (el: HTMLElement, newText: string) => {
-    let frame = 0;
-    const duration = 40; 
-    
-    const animate = () => {
-      let output = "";
-      let complete = 0;
-      for (let i = 0; i < newText.length; i++) {
-        const char = newText[i];
-        const delay = (i / newText.length) * duration;
-        
-        if (frame >= delay) {
-          if (frame < delay + 8 && Math.random() > 0.5) {
-            output += lightningChars[Math.floor(Math.random() * lightningChars.length)];
-          } else {
-            output += char;
-            complete++;
-          }
-        } else {
-          output += Math.random() > 0.8 ? lightningChars[Math.floor(Math.random() * lightningChars.length)] : " ";
-        }
-      }
-      el.innerText = output;
-      if (complete < newText.length) {
-        frame++;
-        requestAnimationFrame(animate);
-      }
-    };
-    animate();
-  };
-
-  const skills = {
-    frontend: ["react", "nextjs", "typescript", "tailwind"],
-    backend: ["php", "laravel", "mysql"],
-    tools: ["github", "vercel", "figma"]
-  };
-
-  const projects = [
-    {
-      title: "Eye of Insight",
-      desc: "Advanced visual decryption system for cinematic archives. Built with the precision of the Sharingan for rapid data extraction.",
-      tech: ["React", "API", "JS"],
-      github: "https://github.com/rryoukou/Movie",
-      demo: "https://final-project-sandy-rho.vercel.app/",
-      span: "md:col-span-2 md:row-span-1",
-      icon: <Globe className="text-primary" />
-    },
-    {
-      title: "Shinobi Supply Route",
-      desc: "Centralized logistics hub for ninja equipment. Optimized for lightning-fast commerce using Chidori-speed Laravel backend.",
-      tech: ["Laravel", "PHP", "Tailwind"],
-      github: "https://github.com/rryoukou/serbu-computer",
-      demo: "https://serbucomputer.web.id/",
-      span: "md:col-span-1 md:row-span-2",
-      icon: <Terminal className="text-primary" />
-    },
-    {
-      title: "Forbidden Scroll Archive",
-      desc: "Knowledge management system for the Hidden Leaf's sensitive scrolls. Secured with multi-layered Uchiha Genjutsu encryption.",
-      tech: ["PHP", "MySQL"],
-      github: "https://github.com/rryoukou/Perpustakaan",
-      demo: null,
-      span: "md:col-span-1 md:row-span-1",
-      icon: <Database className="text-primary" />
-    },
-    {
-      title: "Shinobi Gear Emporium",
-      desc: "Elite marketplace for high-performance combat gear. UI optimized for the visual speed of a Shadow Shinobi.",
-      tech: ["HTML", "CSS"],
-      github: "https://github.com/rryoukou/football-shoping",
-      demo: null,
-      span: "md:col-span-1 md:row-span-1",
-      icon: <Rocket className="text-primary" />
-    }
-  ];
-
-  useEffect(() => {
-    // 1. Initial GSAP Set to prevent flash/stuck state
-    gsap.set(".bento-item", { opacity: 0, y: 50 });
-
-    const ctx = gsap.context(() => {
-      // 2. Staggered Swing-In Entrance
-      gsap.to(".bento-item", {
-        y: 0,
-        rotationX: 0,
-        opacity: 1,
-        transformOrigin: "top center",
-        duration: 1.2,
-        stagger: 0.1,
-        ease: "power3.out", // Smoother for shinobi missions
-        scrollTrigger: {
-          trigger: gridRef.current,
-          start: "top 85%",
-          onEnter: () => {
-            // Text Reveal on Section Reveal
-            const titles = document.querySelectorAll(".scramble-title");
-            titles.forEach((title: any) => chidoriReveal(title, title.innerText));
-          }
-        }
-      });
-
-      // 3. Force Refresh after initialization
-      ScrollTrigger.refresh();
-    }, gridRef);
-
-    // 4. Refresh on Window Load (Ensures all assets/layouts are settled)
-    const handleLoad = () => {
-      ScrollTrigger.refresh();
-    };
-    window.addEventListener("load", handleLoad);
-
-    // 5. Comprehensive Cleanup
-    return () => {
-      ctx.revert();
-      window.removeEventListener("load", handleLoad);
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    };
-  }, []);
-
-  // 3. Hover Interactions
-  const onMouseEnter = (e: any) => {
-    const card = e.currentTarget;
-    const icon = card.querySelector(".hover-icon");
-    const badges = card.querySelectorAll(".badge-item");
-    const glow = card.querySelector(".hover-glow");
-
-    // Sharingan Pulse
-    gsap.to(card, {
-      borderColor: "var(--primary)",
-      boxShadow: "0 0 25px rgba(120, 80, 255, 0.4)",
-      duration: 0.4,
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut"
-    });
-
-    // Micro-interactions
-    if (icon) gsap.to(icon, { y: -5, scale: 1.1, duration: 0.3, ease: "power2.out" });
-    if (badges) gsap.to(badges, { y: -2, stagger: 0.05, duration: 0.3, ease: "power2.out" });
-    if (glow) gsap.to(glow, { opacity: 1, duration: 0.5 });
-  };
-
-  const onMouseLeave = (e: any) => {
-    const card = e.currentTarget;
-    const icon = card.querySelector(".hover-icon");
-    const badges = card.querySelectorAll(".badge-item");
-    const glow = card.querySelector(".hover-glow");
-
-    gsap.killTweensOf(card); // Stop pulse
-    gsap.to(card, { 
-      borderColor: "rgb(30, 41, 59)", // border-slate-800
-      boxShadow: "none", 
-      duration: 0.3 
-    });
-
-    if (icon) gsap.to(icon, { y: 0, scale: 1, duration: 0.3 });
-    if (badges) gsap.to(badges, { y: 0, stagger: 0.05, duration: 0.3 });
-    if (glow) gsap.to(glow, { opacity: 0, duration: 0.3 });
-  };
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const ease = [0.25,0.46,0.45,0.94] as [number,number,number,number];
 
   return (
-    <section id="work" className="py-20 px-6 bg-slate-950" ref={gridRef}>
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h2 className="text-sm font-bold text-primary uppercase tracking-[0.3em] mb-2 transition-colors duration-700">Uchiha Clan // Hidden Leaf Archives</h2>
-            <h3 className="text-3xl md:text-5xl font-bold text-white transition-colors duration-700 scramble-title">Shinobi Missions</h3>
-          </div>
-          <p className="text-slate-500 max-w-md text-sm italic">
-            "I have long since closed my eyes... my only goal is in the darkness." - Sasuke Uchiha
-          </p>
-        </div>
+    <section id="work" ref={sectionRef} className="py-32 px-8 bg-[oklch(0.975_0.005_280)] relative overflow-hidden">
+      {/* grid texture */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.35]"
+        style={{ backgroundImage:"linear-gradient(rgba(124,58,237,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.05) 1px,transparent 1px)", backgroundSize:"64px 64px" }}
+      />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-violet-100/40 blur-[130px] rounded-full pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]">
-          {/* SHARINGAN / SKILLS */}
-          <Card 
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            className="bento-item md:col-span-2 md:row-span-2 bg-slate-900/40 border-slate-800 backdrop-blur-xl overflow-hidden group transition-all duration-500"
-          >
-            <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700">
-              <Flame size={200} className="text-primary transition-colors duration-700" />
-            </div>
-            <CardHeader>
-              <div className="flex items-center gap-2 text-primary mb-2 transition-colors duration-700">
-                <div className="w-2 h-2 bg-primary rounded-full animate-ping"></div>
-                <span className="text-xs font-bold uppercase tracking-widest">Jutsu Mastery</span>
+      <div className="max-w-7xl mx-auto relative z-10">
+
+        {/* ── Header ── */}
+        <motion.div initial={{ opacity:0, y:24 }} whileInView={{ opacity:1, y:0 }}
+          viewport={{ once:true }} transition={{ duration:0.7, ease }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-slate-200"
+        >
+          <div>
+            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-slate-400 mb-3">
+              002 / 004 — Selected Work
+            </p>
+            <h2 className="text-[clamp(2.4rem,5vw,4rem)] font-black text-slate-900 leading-[0.95] tracking-[-0.03em] uppercase">
+              FEATURED<br />
+              <span className="gradient-text">PROJECTS</span>
+            </h2>
+          </div>
+          <div className="max-w-[260px]">
+            <ShinyText
+              text={`"Darkness is what defines the light."`}
+              color="#94a3b8"
+              shineColor="#7c3aed"
+              speed={4}
+              className="text-sm italic leading-relaxed"
+            />
+            <p className="text-slate-500 text-xs mt-1">— Sasuke Uchiha</p>
+          </div>
+        </motion.div>
+        <div className="grid lg:grid-cols-[1fr_300px] gap-8">
+
+          {/* Project rows — editorial numbered list */}
+          <div className="space-y-0 divide-y divide-slate-200">
+            {projects.map((p, idx) => {
+              const Icon = p.icon;
+              return (
+                <AnimatedContent
+                  key={p.num}
+                  distance={28}
+                  direction="vertical"
+                  delay={idx * 0.1}
+                  duration={0.65}
+                  ease="power3.out"
+                >
+                  <div className="group py-8 first:pt-0">
+                  <div className="flex items-start gap-6">
+                    {/* Big number — GlitchText on hover */}
+                    <div className="shrink-0 w-14 text-right leading-none select-none [&_div]:bg-[oklch(0.975_0.005_280)] [&_div]:text-[clamp(2rem,4vw,3.5rem)] [&_div]:font-black [&_div]:text-slate-100 group-hover:[&_div]:text-violet-200 [&_div]:transition-colors [&_div]:duration-300">
+                      <GlitchText
+                        enableOnHover
+                        enableShadows={false}
+                        speed={0.4}
+                      >
+                        {p.num}
+                      </GlitchText>
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-4 mb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-sm bg-white border border-slate-200 flex items-center justify-center group-hover:border-violet-300 group-hover:bg-violet-50 transition-all duration-300 shrink-0">
+                            <Icon size={14} className="text-slate-500 group-hover:text-violet-600 transition-colors" />
+                          </div>
+                          <h3 className="text-slate-800 font-bold text-lg tracking-tight group-hover:text-violet-700 transition-colors">
+                            <DecryptedText text={p.title} animateOn="hover" sequential speed={25}
+                              className="text-inherit font-bold"
+                              encryptedClassName="text-violet-300 font-bold"
+                              revealDirection="start"
+                            />
+                          </h3>
+                          {p.featured && (
+                            <span className="hidden sm:inline-flex px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-violet-600 bg-violet-100 border border-violet-200 rounded-sm">
+                              Featured
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Links */}
+                        <div className="flex gap-2 shrink-0">
+                          {p.demo && (
+                            <a href={p.demo} target="_blank" rel="noreferrer"
+                              className="flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-violet-700 border border-violet-300 hover:bg-violet-700 hover:text-white hover:border-violet-700 transition-all duration-200 rounded-sm">
+                              Live Demo <ExternalLink size={9} />
+                            </a>
+                          )}
+                          <a href={p.github} target="_blank" rel="noreferrer"
+                            className="flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-600 border border-slate-300 hover:bg-slate-800 hover:text-white hover:border-slate-800 transition-all duration-200 rounded-sm">
+                            Code <Github size={9} />
+                          </a>
+                        </div>
+                      </div>
+
+                      <p className="text-slate-500 text-sm leading-relaxed mb-3 max-w-xl">{p.desc}</p>
+
+                      <div className="flex flex-wrap gap-1.5">
+                        {p.tech.map((t) => (
+                          <span key={t} className="px-2 py-0.5 text-[10px] font-mono font-medium text-violet-600 bg-white border border-violet-100 rounded-sm">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </AnimatedContent>
+              );
+            })}
+          </div>
+
+          {/* ── Skills sidebar ── */}
+          <div className="work-row lg:sticky lg:top-28 self-start">
+            <AnimatedContent distance={24} direction="horizontal" delay={0.3} duration={0.7} ease="power3.out">
+            <SpotlightCard spotlightColor="rgba(124, 58, 237, 0.07)"
+              className="glass-card glass-card-hover rounded-sm p-6 flex flex-col"
+            >
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <Code2 size={13} className="text-violet-600" />
+                  <span className="text-slate-800 font-bold text-xs uppercase tracking-[0.18em]">Tech Stack</span>
+                </div>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               </div>
-              <CardTitle className="text-2xl text-white">Uchiha Skillset</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {Object.entries(skills).map(([category, items]) => (
+
+              <div className="space-y-5 flex-1">
+                {skills.map(({ category, items }) => (
                   <div key={category}>
-                    <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">{category}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {items.map((skill) => (
-                        <div key={skill} className="badge-item flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-primary/30 transition-all duration-700">
-                          <img src={`https://skillicons.dev/icons?i=${skill}`} alt={skill} className="w-4 h-4" />
-                          <span className="text-xs text-slate-300 capitalize">{skill}</span>
+                    <p className="text-[9px] text-slate-400 uppercase tracking-[0.22em] font-bold mb-2.5">{category}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {items.map((s) => (
+                        <div key={s} className="flex items-center gap-1.5 px-2 py-1 rounded-sm bg-white border border-slate-100 hover:border-violet-200 transition-all cursor-default">
+                          <img src={`https://skillicons.dev/icons?i=${s}`} alt={s} className="w-3.5 h-3.5" />
+                          <span className="text-[10px] text-slate-600 capitalize font-medium">{s}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
 
-          {/* MISSION ITEMS */}
-          {projects.map((project, i) => (
-            <Card 
-              key={i} 
-              onMouseEnter={onMouseEnter}
-              onMouseLeave={onMouseLeave}
-              className={`bento-item ${project.span} bg-slate-900/40 border-slate-800 backdrop-blur-xl transition-all duration-500 group relative overflow-hidden flex flex-col`}
-            >
-              {/* Sharingan Hover Glow */}
-              <div className="hover-glow absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary),0.1)_0%,transparent_70%)] opacity-0 transition-opacity duration-700"></div>
-              
-              <CardHeader className="relative z-10">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="hover-icon p-2 rounded-lg bg-primary/10 border border-primary/30 transition-colors duration-700">
-                    {project.icon}
+              <div className="mt-6 pt-4 border-t border-slate-100 space-y-2.5">
+                {[
+                  { label:"Status",  val: <span className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />Open to Work</span> },
+                  { label:"Focus",   val: <span className="text-[10px] font-bold text-slate-700">Fullstack Dev</span> },
+                  { label:"Chakra",  val: <div className="flex gap-1">{[...Array(5)].map((_,i)=><div key={i} className="h-1 w-4 bg-violet-400 rounded-sm" style={{opacity:0.3+i*0.14}} />)}</div> },
+                ].map(({ label, val }) => (
+                  <div key={label} className="flex items-center justify-between">
+                    <span className="text-[10px] text-slate-400 uppercase tracking-[0.15em] font-medium">{label}</span>
+                    {val}
                   </div>
-                  <div className="flex gap-2">
-                    {project.demo && (
-                      <a href={project.demo} target="_blank" className="p-1.5 rounded-md hover:bg-primary/20 text-slate-400 hover:text-primary transition-all">
-                        <ExternalLink size={16} />
-                      </a>
-                    )}
-                    <a href={project.github} target="_blank" className="p-1.5 rounded-md hover:bg-primary/20 text-slate-400 hover:text-primary transition-all">
-                      <Github size={16} />
-                    </a>
-                  </div>
-                </div>
-                <CardTitle className="text-lg text-white group-hover:text-primary transition-colors duration-700 scramble-title">
-                  {project.title}
-                </CardTitle>
-                <CardDescription className="text-slate-400 text-xs mt-1 line-clamp-2 leading-relaxed">
-                  {project.desc}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative z-10 flex flex-wrap gap-2 mt-auto">
-                {project.tech.map((t) => (
-                  <Badge key={t} variant="secondary" className="badge-item bg-slate-800 text-[10px] text-slate-400 border-slate-700 font-mono transition-colors duration-700">
-                    {t}
-                  </Badge>
                 ))}
-              </CardContent>
-            </Card>
-          ))}
-
-          {/* HIDDEN LEAF TECH NOTES */}
-          <Card 
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            className="bento-item md:col-span-1 md:row-span-1 bg-slate-900/40 border-slate-800 backdrop-blur-xl transition-all duration-500 group cursor-pointer relative overflow-hidden flex flex-col justify-center p-6"
-          >
-             <div className="flex items-center gap-2 text-primary mb-2 transition-colors duration-700">
-               <Newspaper size={18} />
-               <span className="text-[10px] font-black uppercase tracking-widest">Leaf Scroll</span>
-             </div>
-             <h3 className="text-white font-bold leading-tight scramble-title">Tech Notes // Upcoming Jutsu</h3>
-             <p className="text-slate-500 text-[10px] mt-2 italic leading-relaxed">
-               "Mastering new elements and frameworks. Archive in progress."
-             </p>
-             <div className="mt-4 flex items-center gap-2">
-               <div className="w-1 h-1 bg-primary rounded-full animate-pulse transition-colors duration-700"></div>
-               <span className="text-[8px] text-primary uppercase font-bold transition-colors duration-700">Chakra Encrypted</span>
-             </div>
-          </Card>
-
-          {/* HUD STATUS BOX */}
-          <Card 
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            className="bento-item md:col-span-1 md:row-span-1 bg-primary border-none shadow-[0_0_30px_rgba(var(--primary),0.3)] flex flex-col items-center justify-center text-center p-6 group cursor-pointer relative overflow-hidden transition-all duration-700"
-          >
-             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-             <div className="relative z-10 flex flex-col items-center">
-               <Zap className="hover-icon text-white mb-2 animate-pulse" size={32} />
-               <h3 className="text-white font-black uppercase tracking-tighter text-xl scramble-title">Activate Susanoo</h3>
-               <p className="text-primary-foreground/70 text-[10px] font-bold mt-1 tracking-widest uppercase">Status: Ready</p>
-             </div>
-          </Card>
-
+              </div>
+            </SpotlightCard>
+            </AnimatedContent>
+          </div>
         </div>
       </div>
+
+
     </section>
   );
 };

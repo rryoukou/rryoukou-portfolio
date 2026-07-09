@@ -1,106 +1,160 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { Heart, Zap } from "lucide-react";
-import gsap from "gsap";
+import { Github, Mail, Linkedin, ArrowUpRight, Heart } from "lucide-react";
+import { ScrollVelocity } from "@/components/reactbits/ScrollVelocity";
+import ShinyText from "@/components/reactbits/ShinyText";
+import AnimatedContent from "@/components/reactbits/AnimatedContent";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
-const Footer = () => {
-  const heartRef = useRef<HTMLDivElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
+const links = [
+  { name: "Journey", href: "#experience" },
+  { name: "Work",    href: "#work"        },
+  { name: "Contact", href: "#contact"     },
+];
 
-  useEffect(() => {
-    // 1. Uchiha Seal Pulse Animation
-    if (heartRef.current) {
-      gsap.to(heartRef.current, {
-        scale: 1.3,
-        opacity: 0.8,
-        filter: "drop-shadow(0 0 8px rgba(120, 80, 255, 0.8))",
-        duration: 0.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-    }
-  }, []);
+const socials = [
+  { icon: Github,   href: "https://github.com/rryoukou", label: "GitHub",   spotlight: "rgba(15,23,42,0.08)"    as `rgba(${number}, ${number}, ${number}, ${number})` },
+  { icon: Mail,     href: "mailto:rryoukou14@gmail.com", label: "Email",    spotlight: "rgba(124,58,237,0.08)"  as `rgba(${number}, ${number}, ${number}, ${number})` },
+  { icon: Linkedin, href: "#",                           label: "LinkedIn", spotlight: "rgba(37,99,235,0.08)"   as `rgba(${number}, ${number}, ${number}, ${number})` },
+];
 
-  const handleLinkEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    gsap.to(e.currentTarget, {
-      y: -2,
-      color: "var(--primary)",
-      duration: 0.3,
-      ease: "power2.out"
-    });
-  };
-
-  const handleLinkLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    gsap.to(e.currentTarget, {
-      y: 0,
-      color: "#64748b", // text-slate-500
-      duration: 0.3,
-      ease: "power2.in"
-    });
-  };
-
+export default function Footer() {
   return (
-    <footer className="relative py-16 px-6 bg-slate-950 overflow-hidden">
-      {/* 3. Tech Separator Line */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-800 to-transparent">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-primary rotate-45 shadow-[0_0_10px_rgba(var(--primary),0.5)]"></div>
+    <footer className="relative bg-[oklch(0.975_0.005_280)] overflow-hidden">
+      {/* Grid texture */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.3]"
+        style={{
+          backgroundImage: "linear-gradient(rgba(124,58,237,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.06) 1px,transparent 1px)",
+          backgroundSize: "64px 64px",
+        }}
+      />
+      {/* Ambient orb */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-violet-100/40 blur-[100px] rounded-full pointer-events-none" />
+
+      {/* Velocity marquee */}
+      <div className="relative border-b border-slate-200 overflow-hidden py-8">
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[oklch(0.975_0.005_280)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[oklch(0.975_0.005_280)] to-transparent z-10 pointer-events-none" />
+        <ScrollVelocity
+          texts={[
+            "✦ Next.js ✦ Laravel ✦ React ✦ TypeScript ✦ Tailwind ✦ PHP ✦ MySQL ✦ Figma ✦ Vercel",
+            "✦ Fullstack Dev ✦ Open to Work ✦ Available 2026 ✦ Indonesia ✦ Building Cool Stuff",
+          ]}
+          velocity={50}
+          className="text-violet-500/60 font-bold text-xs uppercase tracking-[0.18em]"
+          scrollerClassName="gap-0"
+          parallaxClassName="py-0.5"
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded bg-primary/10 border border-primary/20">
-            <Zap size={18} className="text-primary" />
-          </div>
-          <h3 className="text-xl font-black bg-gradient-to-r from-indigo-500 to-primary bg-clip-text text-transparent italic uppercase tracking-tighter">
-            ryoukou
-          </h3>
-        </div>
+      {/* Main content */}
+      <div className="max-w-7xl mx-auto px-8 py-16 relative z-10">
+        <div className="grid md:grid-cols-[1fr_auto_auto] gap-12 mb-12">
 
-        <div className="flex flex-col items-center gap-3">
-          <div className="flex items-center gap-1 text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">
-            <span>© 2026 Uchiha Clan // Created with</span>
-            <div ref={heartRef} className="mx-1">
-              <Heart size={12} className="text-primary fill-primary" />
+          {/* Brand */}
+          <AnimatedContent distance={24} direction="vertical" delay={0} duration={0.7} ease="power3.out">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="relative w-10 h-10 rounded-sm border border-violet-200 bg-white flex items-center justify-center shadow-sm overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-50 to-white" />
+                <ShinyText
+                  text="RY"
+                  color="#5b21b6"
+                  shineColor="#a78bfa"
+                  speed={3}
+                  className="relative text-[10px] font-black tracking-widest"
+                />
+              </div>
+              <div>
+                <p className="text-slate-800 font-black text-sm leading-none tracking-tight">Ryoukou Arya</p>
+                <p className="text-slate-400 text-[9px] uppercase tracking-[0.2em] mt-0.5">Fullstack Developer</p>
+              </div>
             </div>
-            <span>by rryoukou</span>
+            <p className="text-slate-400 text-sm leading-relaxed max-w-[240px] mb-5">
+              Building elegant digital experiences with precision and purpose.
+            </p>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-sm shadow-sm">
+              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">Portfolio</span>
+              <span className="text-[9px] font-bold text-violet-600 font-mono">V1.0</span>
+              <span className="text-[9px] text-slate-300">·</span>
+              <span className="text-[9px] text-slate-400 font-mono">2026</span>
+            </div>
+          </AnimatedContent>
+
+          {/* Nav links */}
+          <div className="min-w-[120px]">
+            <AnimatedContent distance={16} direction="vertical" delay={0.1} duration={0.6}>
+              <p className="text-[9px] font-black uppercase tracking-[0.28em] text-slate-400 mb-5">Navigate</p>
+            </AnimatedContent>
+            <ul className="space-y-3">
+              {links.map((l, i) => (
+                <AnimatedContent key={l.name} distance={14} direction="horizontal" reverse delay={0.15 + i * 0.07} duration={0.5}>
+                  <li>
+                    <a
+                      href={l.href}
+                      className="flex items-center gap-2 text-sm text-slate-500 hover:text-violet-700 transition-colors duration-200 group"
+                    >
+                      <span className="text-[8px] font-black text-slate-300 tabular-nums">0{i + 1}</span>
+                      {l.name}
+                      <ArrowUpRight size={9} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 text-violet-400" />
+                    </a>
+                  </li>
+                </AnimatedContent>
+              ))}
+            </ul>
           </div>
-          
-          {/* 2. System Status Indicator */}
-          <div className="flex items-center gap-2 text-[8px] font-bold tracking-[0.3em]">
-            <span className="text-slate-600">STATUS:</span>
-            <span className="text-primary animate-pulse">SHARINGAN ACTIVE</span>
-            <span className="text-slate-600">//</span>
-            <span className="text-primary">CHAKRA LINK SECURE</span>
+
+          {/* Socials */}
+          <div className="min-w-[140px]">
+            <AnimatedContent distance={16} direction="vertical" delay={0.1} duration={0.6}>
+              <p className="text-[9px] font-black uppercase tracking-[0.28em] text-slate-400 mb-5">Connect</p>
+            </AnimatedContent>
+            <div className="flex gap-2 mb-5">
+              {socials.map(({ icon: Icon, href, label, spotlight }, i) => (
+                <AnimatedContent key={label} distance={14} direction="vertical" delay={0.2 + i * 0.07} duration={0.5}>
+                  <SpotlightCard spotlightColor={spotlight} className="rounded-sm">
+                    <a
+                      href={href}
+                      target={href.startsWith("http") ? "_blank" : undefined}
+                      rel="noreferrer"
+                      aria-label={label}
+                      className="w-9 h-9 rounded-sm border border-slate-200 bg-white hover:border-violet-400 hover:bg-violet-50 hover:text-violet-600 flex items-center justify-center text-slate-400 transition-all duration-300 shadow-sm hover:shadow-violet-100/60 hover:shadow-md hover:-translate-y-0.5"
+                    >
+                      <Icon size={13} />
+                    </a>
+                  </SpotlightCard>
+                </AnimatedContent>
+              ))}
+            </div>
+            <AnimatedContent distance={12} direction="horizontal" reverse delay={0.38} duration={0.5}>
+              <a
+                href="mailto:rryoukou14@gmail.com"
+                className="flex items-center gap-1.5 text-[11px] text-violet-600 hover:text-violet-800 transition-colors font-bold group"
+              >
+                <Mail size={10} />
+                <span className="group-hover:underline underline-offset-2">rryoukou14@gmail.com</span>
+              </a>
+            </AnimatedContent>
           </div>
         </div>
 
-        {/* 4. Nav Hover Micro-interactions */}
-        <div ref={linksRef} className="flex gap-8">
-          {[
-            { name: "History", link: "#experience" },
-            { name: "Shinobi Missions", link: "#work" },
-            { name: "Chakra Link", link: "#contact" },
-          ].map((item) => (
-            <a 
-              key={item.name}
-              href={item.link} 
-              onMouseEnter={handleLinkEnter}
-              onMouseLeave={handleLinkLeave}
-              className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] transition-none"
+        {/* Bottom bar */}
+        <AnimatedContent distance={12} direction="vertical" delay={0.4} duration={0.6}>
+          <div className="pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-slate-400 text-xs flex items-center gap-1.5">
+              © 2026 Ryoukou Arya Nugroho · Made with
+              <Heart size={9} className="text-violet-400 fill-violet-400 animate-pulse" />
+              in Indonesia
+            </p>
+            <SpotlightCard
+              spotlightColor="rgba(124,58,237,0.08)"
+              className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-100 rounded-sm shadow-sm"
             >
-              {item.name}
-            </a>
-          ))}
-        </div>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.15em]">Available for opportunities</span>
+            </SpotlightCard>
+          </div>
+        </AnimatedContent>
       </div>
-
-      {/* Background Chakra Decorative Element */}
-      <div className="absolute -bottom-10 -right-10 w-40 h-40 border border-primary/5 rounded-full pointer-events-none"></div>
-      <div className="absolute -bottom-16 -right-16 w-40 h-40 border border-primary/5 rounded-full pointer-events-none"></div>
     </footer>
   );
-};
-
-export default Footer;
-
+}

@@ -1,202 +1,189 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { Briefcase, GraduationCap, Cpu, Zap } from "lucide-react";
+import { useRef } from "react";
+import { motion } from "framer-motion";
+import { Briefcase, GraduationCap, Cpu } from "lucide-react";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
+import DecryptedText from "@/components/reactbits/DecryptedText";
+import AnimatedContent from "@/components/reactbits/AnimatedContent";
 
-gsap.registerPlugin(ScrollTrigger);
+const events = [
+  {
+    num: "01",
+    title: "Self-Taught Web Developer",
+    company: "Independent",
+    date: "2024 – Present",
+    desc: "Deep diving into modern frontend and backend systems. Building fullstack apps with Next.js and Laravel, shipping production-ready products.",
+    tags: ["Next.js", "Laravel", "TypeScript", "MySQL"],
+    icon: Cpu,
+    current: true,
+    accent: "bg-violet-600",
+    spotlightColor: "rgba(124, 58, 237, 0.08)" as `rgba(${number}, ${number}, ${number}, ${number})`,
+    tagCls: "text-violet-700 bg-violet-50 border-violet-200",
+    borderCls: "hover:border-violet-300",
+    numCls: "group-hover:text-violet-200",
+    iconBg: "group-hover:bg-violet-100 group-hover:border-violet-200",
+    iconColor: "group-hover:text-violet-600",
+    titleColor: "group-hover:text-violet-700",
+    accentLine: "from-violet-400/50",
+  },
+  {
+    num: "02",
+    title: "Laravel & React Exploration",
+    company: "Self Study",
+    date: "2024",
+    desc: "Mastering TALL stack and MERN concepts. Developed robust database structures and interactive UIs across full-cycle web apps.",
+    tags: ["React", "PHP", "Tailwind", "REST API"],
+    icon: Briefcase,
+    current: false,
+    accent: "bg-indigo-600",
+    spotlightColor: "rgba(99, 102, 241, 0.08)" as `rgba(${number}, ${number}, ${number}, ${number})`,
+    tagCls: "text-indigo-700 bg-indigo-50 border-indigo-200",
+    borderCls: "hover:border-indigo-300",
+    numCls: "group-hover:text-indigo-200",
+    iconBg: "group-hover:bg-indigo-100 group-hover:border-indigo-200",
+    iconColor: "group-hover:text-indigo-600",
+    titleColor: "group-hover:text-indigo-700",
+    accentLine: "from-indigo-400/50",
+  },
+  {
+    num: "03",
+    title: "Educational Journey",
+    company: "Formal Education",
+    date: "2023 – 2024",
+    desc: "Foundational learning in HTML, CSS, and JavaScript. Understanding web architecture, design principles, and CS fundamentals.",
+    tags: ["HTML", "CSS", "JavaScript", "Git"],
+    icon: GraduationCap,
+    current: false,
+    accent: "bg-purple-600",
+    spotlightColor: "rgba(147, 51, 234, 0.08)" as `rgba(${number}, ${number}, ${number}, ${number})`,
+    tagCls: "text-purple-700 bg-purple-50 border-purple-200",
+    borderCls: "hover:border-purple-300",
+    numCls: "group-hover:text-purple-200",
+    iconBg: "group-hover:bg-purple-100 group-hover:border-purple-200",
+    iconColor: "group-hover:text-purple-600",
+    titleColor: "group-hover:text-purple-700",
+    accentLine: "from-purple-400/50",
+  },
+];
 
 const Experience = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const [scrambledTitle, setScrambledTitle] = useState("Shinobi History");
-
-  // Scramble Text Logic
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-  
-  const scrambleText = (finalText: string) => {
-    let iteration = 0;
-    const interval = setInterval(() => {
-      setScrambledTitle(
-        finalText
-          .split("")
-          .map((char, index) => {
-            if (index < iteration) return finalText[index];
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join("")
-      );
-      if (iteration >= finalText.length) clearInterval(interval);
-      iteration += 1 / 3;
-    }, 30);
-  };
-
-  const events = [
-    {
-      title: "Self-Taught Web Developer",
-      date: "2024 - Present",
-      desc: "Deep diving into modern frontend frameworks and backend systems. Building fullstack applications with Next.js and Laravel.",
-      icon: <Cpu className="text-white" />,
-      color: "bg-primary"
-    },
-    {
-      title: "Laravel & React Exploration",
-      date: "2024",
-      desc: "Mastering the TALL stack and MERN stack concepts. Developing robust database structures and interactive UIs.",
-      icon: <Briefcase className="text-white" />,
-      color: "bg-primary"
-    },
-    {
-      title: "Educational Journey",
-      date: "2023 - 2024",
-      desc: "Foundational learning in HTML, CSS, and JavaScript. Understanding web architecture and design principles.",
-      icon: <GraduationCap className="text-white" />,
-      color: "bg-primary"
-    }
-  ];
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // 1. Title Scramble Animation
-      ScrollTrigger.create({
-        trigger: titleRef.current,
-        start: "top 80%",
-        onEnter: () => scrambleText("Shinobi History"),
-        once: true
-      });
-
-      // 2. Dynamic Timeline Line Animation
-      gsap.fromTo(lineRef.current, 
-        { scaleY: 0 },
-        { 
-          scaleY: 1, 
-          ease: "none",
-          transformOrigin: "top center",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 40%",
-            end: "bottom 60%",
-            scrub: 0.5
-          }
-        }
-      );
-
-      // 3. Node & Card Animations
-      const timelineItems = gsap.utils.toArray(".timeline-item");
-      
-      timelineItems.forEach((item: any, i: number) => {
-        const node = item.querySelector(".node-icon");
-        const card = item.querySelector(".content-card");
-        const pulse = item.querySelector(".pulse-ring");
-
-        // Node Activation (Scale + Pulse)
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: node,
-            start: "top 60%",
-            toggleActions: "play none none reverse",
-          }
-        })
-        .fromTo(node, 
-          { scale: 0.5, borderColor: "rgba(120, 80, 255, 0.3)" },
-          { scale: 1.2, borderColor: "var(--primary)", duration: 0.4, ease: "back.out(2)" }
-        )
-        .to(node, { scale: 1, duration: 0.2 })
-        .fromTo(pulse, 
-          { scale: 0.8, opacity: 1 },
-          { scale: 2.5, opacity: 0, duration: 1, repeat: -1, ease: "power2.out" },
-          "<"
-        );
-
-        // Elastic Card Swing-In
-        gsap.fromTo(card,
-          { 
-            x: i % 2 === 0 ? -150 : 150, 
-            opacity: 0, 
-            rotateY: i % 2 === 0 ? 15 : -15 
-          },
-          {
-            x: 0,
-            opacity: 1,
-            rotateY: 0,
-            duration: 1.2,
-            ease: "back.out(1.5)",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const ease = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number];
 
   return (
-    <section id="experience" className="py-32 px-6 bg-slate-950 relative overflow-hidden">
-      {/* Background Chakra Lines */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[1px] h-full bg-primary"></div>
-        <div className="absolute top-0 right-1/4 w-[1px] h-full bg-primary"></div>
-      </div>
+    <section id="experience" className="py-32 px-8 bg-white relative overflow-hidden" ref={sectionRef}>
+      {/* Ambient orbs */}
+      <div className="absolute top-0 left-0 w-80 h-80 bg-violet-100/50 blur-[110px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-64 h-64 bg-indigo-100/40 blur-[90px] rounded-full pointer-events-none" />
+      {/* Grid texture */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.2]"
+        style={{ backgroundImage: "linear-gradient(rgba(124,58,237,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.05) 1px,transparent 1px)", backgroundSize: "64px 64px" }}
+      />
 
-      <div className="max-w-4xl mx-auto" ref={containerRef}>
-        <div className="text-center mb-24">
-          <h2 className="text-sm font-bold text-primary uppercase tracking-[0.3em] mb-3">Timeline Journey</h2>
-          <h3 ref={titleRef} className="text-4xl md:text-5xl font-black text-white italic min-h-[1.2em]">
-            {scrambledTitle}
-          </h3>
-        </div>
+      <div className="max-w-7xl mx-auto relative z-10">
 
-        <div className="relative">
-          {/* Vertical Line */}
-          <div 
-            ref={lineRef}
-            className="absolute left-1/2 -translate-x-1/2 top-0 w-[2px] bg-gradient-to-b from-primary via-indigo-500 to-transparent origin-top h-full hidden md:block"
-          >
-            {/* HUD Glowing Tip */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full blur-md opacity-50"></div>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ duration: 0.7, ease }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-6 border-b border-slate-200"
+        >
+          <div>
+            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-slate-400 mb-3">
+              001 / 004 — Journey
+            </p>
+            <h2 className="text-[clamp(2.4rem,5vw,4rem)] font-black text-slate-900 leading-[0.95] tracking-[-0.03em] uppercase">
+              MY<br />
+              <span className="gradient-text">EXPERIENCE</span>
+            </h2>
           </div>
+          <p className="text-slate-400 text-sm max-w-[240px] leading-relaxed">
+            From zero to shipping full-stack products — a self-taught developer&apos;s path.
+          </p>
+        </motion.div>
 
-          <div className="space-y-24 md:space-y-32">
-            {events.map((event, i) => (
-              <div key={i} className={`timeline-item relative flex flex-col ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center gap-8 md:gap-0`}>
-                
-                {/* Content Card */}
-                <div className={`content-card w-full md:w-[42%] ${i % 2 === 0 ? "md:text-right" : "md:text-left"} perspective-1000`}>
-                  <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-primary/30 transition-all duration-500 group backdrop-blur-sm relative overflow-hidden">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-widest">{event.date}</span>
-                    <h4 className="text-xl font-bold text-white mt-1 group-hover:text-primary transition-colors">{event.title}</h4>
-                    <p className="text-slate-400 text-sm mt-3 leading-relaxed">{event.desc}</p>
-                    
-                    {/* Card HUD Siku */}
-                    <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary/0 group-hover:border-primary/20 transition-all"></div>
+        {/* Experience rows */}
+        <div className="space-y-6">
+          {events.map((ev, idx) => {
+            const Icon = ev.icon;
+            return (
+              <AnimatedContent
+                key={ev.num}
+                distance={40}
+                direction="vertical"
+                delay={idx * 0.12}
+                duration={0.7}
+                ease="power3.out"
+              >
+                <SpotlightCard
+                  spotlightColor={ev.spotlightColor}
+                  className={`group relative bg-white border border-slate-100 ${ev.borderCls} rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-slate-100/80 overflow-hidden`}
+                >
+                  {/* Top accent bar — animates on hover */}
+                  <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${ev.accentLine} via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+
+                  <div className="p-8">
+                    <div className="grid md:grid-cols-[80px_1fr_200px] gap-6 items-start">
+
+                      {/* Number + icon column */}
+                      <div className="flex flex-col items-center gap-3">
+                        <span className={`text-[clamp(1.8rem,3.5vw,3rem)] font-black text-slate-100 ${ev.numCls} transition-colors duration-300 leading-none select-none`}>
+                          {ev.num}
+                        </span>
+                        <div className={`w-10 h-10 rounded-lg ${ev.accent} flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-110`}>
+                          <Icon size={16} className="text-white" />
+                        </div>
+                        {ev.current && (
+                          <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[8px] font-black uppercase tracking-widest bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            Now
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Content */}
+                      <div className="min-w-0">
+                        <div className="mb-2">
+                          <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-violet-600">{ev.date}</span>
+                        </div>
+                        <h3 className={`text-slate-800 font-black text-xl tracking-tight mb-1 ${ev.titleColor} transition-colors duration-300`}>
+                          <DecryptedText
+                            text={ev.title}
+                            animateOn="hover"
+                            sequential
+                            speed={30}
+                            className="text-inherit font-black"
+                            encryptedClassName="text-violet-300 font-black"
+                            revealDirection="start"
+                          />
+                        </h3>
+                        <p className="text-slate-400 text-xs font-medium uppercase tracking-[0.15em] mb-4">{ev.company}</p>
+                        <p className="text-slate-500 text-sm leading-relaxed max-w-2xl">{ev.desc}</p>
+                      </div>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-1.5 md:justify-end">
+                        {ev.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className={`px-2.5 py-1 text-[10px] font-mono font-semibold border rounded-md transition-all duration-200 hover:scale-105 ${ev.tagCls}`}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
 
-                {/* Center Icon Node */}
-                <div className="node-icon absolute left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-xl bg-slate-950 border-2 border-slate-800 z-10 shadow-[0_0_20px_rgba(var(--primary),0)] transition-shadow duration-500">
-                  <div className="w-6 h-6 relative z-10">{event.icon}</div>
-                  {/* Pulse Ring (Sharingan Alert) */}
-                  <div className="pulse-ring absolute inset-0 rounded-xl border-2 border-primary opacity-0 pointer-events-none"></div>
-                </div>
-
-                {/* Placeholder for symmetry */}
-                <div className="hidden md:block w-[42%]"></div>
-              </div>
-            ))}
-          </div>
+                  {/* Bottom accent line — expands on hover */}
+                  <div className={`h-px w-0 group-hover:w-full bg-gradient-to-r ${ev.accentLine} via-transparent to-transparent transition-all duration-500`} />
+                </SpotlightCard>
+              </AnimatedContent>
+            );
+          })}
         </div>
       </div>
 
-      <style jsx>{`
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-      `}</style>
     </section>
   );
 };

@@ -3,49 +3,55 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const MouseFollower = () => {
-  const followerRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const dotRef  = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    const onMouseMove = (e: MouseEvent) => {
-      gsap.to(followerRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.3,
-        ease: "power2.out",
-      });
-      gsap.to(ringRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1,
-        ease: "power1.out",
+    const onMove = (e: MouseEvent) => {
+      gsap.to(ringRef.current, { x: e.clientX, y: e.clientY, duration: 0.55, ease: "power2.out" });
+      gsap.to(dotRef.current,  { x: e.clientX, y: e.clientY, duration: 0.08, ease: "power1.out" });
+    };
+    const onDown = () => {
+      gsap.to(ringRef.current, { scale: 0.75, duration: 0.15 });
+      gsap.to(dotRef.current,  { scale: 2.5,  duration: 0.15 });
+    };
+    const onUp = () => {
+      gsap.to(ringRef.current, { scale: 1, duration: 0.3, ease: "elastic.out(1,0.5)" });
+      gsap.to(dotRef.current,  { scale: 1, duration: 0.2 });
+    };
+    const onEnter = () => gsap.to(ringRef.current, { scale: 1.6, borderColor: "rgba(124,58,237,0.5)", duration: 0.3 });
+    const onLeave = () => gsap.to(ringRef.current, { scale: 1,   borderColor: "rgba(124,58,237,0.2)", duration: 0.3 });
+
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousedown", onDown);
+    window.addEventListener("mouseup",   onUp);
+    document.querySelectorAll("a, button, [role='button']").forEach(el => {
+      el.addEventListener("mouseenter", onEnter);
+      el.addEventListener("mouseleave", onLeave);
+    });
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousedown", onDown);
+      window.removeEventListener("mouseup",   onUp);
+      document.querySelectorAll("a, button, [role='button']").forEach(el => {
+        el.removeEventListener("mouseenter", onEnter);
+        el.removeEventListener("mouseleave", onLeave);
       });
     };
-
-    window.addEventListener("mousemove", onMouseMove);
-    return () => window.removeEventListener("mousemove", onMouseMove);
   }, []);
 
   return (
     <>
-      {/* Outer HUD Ring - Sasuke Purple */}
-      <div
-        ref={followerRef}
-        className="fixed top-0 left-0 w-12 h-12 border border-primary/30 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block"
-      >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-2 bg-primary"></div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-2 bg-primary"></div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[1px] w-2 bg-primary"></div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-[1px] w-2 bg-primary"></div>
+      <div ref={ringRef} className="fixed top-0 left-0 pointer-events-none z-[9998] hidden md:block" style={{ transform: "translate(-50%,-50%)" }}>
+        <div className="w-9 h-9 rounded-full border border-violet-400/20" />
       </div>
-
-      {/* Inner Blue Core - Chidori Effect */}
-      <div
-        ref={ringRef}
-        className="fixed top-0 left-0 w-2 h-2 bg-indigo-400 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block shadow-[0_0_10px_#818cf8]"
-      />
+      <div ref={dotRef} className="fixed top-0 left-0 pointer-events-none z-[9998] hidden md:block" style={{ transform: "translate(-50%,-50%)" }}>
+        <div className="w-1.5 h-1.5 rounded-full bg-violet-500/70" />
+      </div>
     </>
   );
 };
